@@ -49,7 +49,7 @@ const { data } = Astro.props;
           <p class="en">{data.photoLabel.en}</p>
         </div>
       </div>
-      <div class="hero-badge">
+      <div class="hero-badge" aria-hidden="true">
         <div class="badge-num">
           {data.badge.value}
           <small><span class="es">{data.badge.valueSuffix.es}</span><span class="en">{data.badge.valueSuffix.en}</span></small>
@@ -59,4 +59,11 @@ const { data } = Astro.props;
       </div>
     </div>
   </div>
+
+  <a href="#conoceme" class="hero-scroll-hint" aria-label="Scroll">
+    <span class="es">Descubrir</span><span class="en">Discover</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
 </section>

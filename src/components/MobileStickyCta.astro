@@ -1,0 +1,32 @@
+---
+interface Props {
+  href: string;
+  labelEs: string;
+  labelEn: string;
+}
+
+const { href, labelEs, labelEn } = Astro.props;
+---
+
+<div class="mobile-sticky-cta" data-sticky-cta>
+  <a href={href} class="btn-primary">
+    <span class="es">{labelEs}</span><span class="en">{labelEn}</span>
+  </a>
+</div>
+
+<script>
+  const sticky = document.querySelector<HTMLElement>('[data-sticky-cta]');
+  const footerCta = document.querySelector<HTMLElement>('.footer-cta');
+
+  if (sticky && footerCta && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          sticky.classList.toggle('is-hidden', entry.isIntersecting);
+        });
+      },
+      { rootMargin: '0px 0px -20% 0px' },
+    );
+    observer.observe(footerCta);
+  }
+</script>

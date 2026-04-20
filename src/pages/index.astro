@@ -1,6 +1,11 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Nav from '@components/Nav.astro';
+import ScrollProgress from '@components/ScrollProgress.astro';
+import BackToTop from '@components/BackToTop.astro';
+import RevealOnScroll from '@components/RevealOnScroll.astro';
+import MobileStickyCta from '@components/MobileStickyCta.astro';
+import Footer from '@components/Footer.astro';
 import Hero from '@components/sections/Hero.astro';
 import About from '@components/sections/About.astro';
 import Paradigm from '@components/sections/Paradigm.astro';
@@ -13,7 +18,9 @@ import { landing } from '@/content/landing';
 ---
 
 <BaseLayout title={landing.meta.title} description={landing.meta.description}>
-  <Nav logo={landing.nav.logo} links={landing.nav.links} />
+  <ScrollProgress slot="progress" />
+  <Nav slot="nav" logo={landing.nav.logo} links={landing.nav.links} />
+
   <Hero data={landing.hero} />
   <About data={landing.about} />
   <Paradigm data={landing.paradigm} />
@@ -22,4 +29,12 @@ import { landing } from '@/content/landing';
   <Habits data={landing.habits} />
   <Timeline data={landing.timeline} />
   <FooterCta data={landing.footerCta} />
+
+  <Footer slot="footer" />
+
+  <Fragment slot="overlays">
+    <MobileStickyCta href="#rutinas" labelEs="Ver programas" labelEn="See programs" />
+    <BackToTop />
+    <RevealOnScroll />
+  </Fragment>
 </BaseLayout>

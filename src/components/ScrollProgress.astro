@@ -1,0 +1,27 @@
+---
+---
+
+<div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-bar" data-scroll-bar></div></div>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-scroll-bar]');
+  if (bar) {
+    let ticking = false;
+    const update = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const pct = max > 0 ? (doc.scrollTop / max) * 100 : 0;
+      bar.style.transform = `scaleX(${pct / 100})`;
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+</script>
