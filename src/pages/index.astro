@@ -1,29 +1,25 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/Nav.astro';
 import Hero from '@components/sections/Hero.astro';
-import { sanity } from '@lib/sanity';
-import { LANDING_QUERY } from '@lib/queries';
-import type { LandingPage } from '@/types/sanity';
-
-const landing = await sanity.fetch<LandingPage | null>(LANDING_QUERY);
+import About from '@components/sections/About.astro';
+import Paradigm from '@components/sections/Paradigm.astro';
+import Products from '@components/sections/Products.astro';
+import Preview from '@components/sections/Preview.astro';
+import Habits from '@components/sections/Habits.astro';
+import Timeline from '@components/sections/Timeline.astro';
+import FooterCta from '@components/sections/FooterCta.astro';
+import { landing } from '@/content/landing';
 ---
 
-<BaseLayout
-  title="Mora"
-  description="Rutinas para ganar músculo, progresar y sentirte segura en el gym."
->
-  {landing?.hero ? (
-    <Hero data={landing.hero} />
-  ) : (
-    <section class="py-20 text-center">
-      <h1 class="text-5xl font-bold tracking-tight">Mora</h1>
-      <p class="mt-4 text-lg text-[color:var(--color-muted)]">
-        Todavía no hay contenido en Sanity.
-      </p>
-      <p class="mt-2 text-sm text-[color:var(--color-muted)]">
-        Abrí <a class="underline" href="http://localhost:3333">el Studio</a>, creá el Landing page y volvé a cargar.
-      </p>
-    </section>
-  )}
-  <!-- TODO: render <About />, <Paradigm />, <Products />, <Preview />, <Habits />, <Timeline />, <Cta /> cuando el contenido exista. -->
+<BaseLayout title={landing.meta.title} description={landing.meta.description}>
+  <Nav logo={landing.nav.logo} links={landing.nav.links} />
+  <Hero data={landing.hero} />
+  <About data={landing.about} />
+  <Paradigm data={landing.paradigm} />
+  <Products data={landing.products} />
+  <Preview data={landing.preview} />
+  <Habits data={landing.habits} />
+  <Timeline data={landing.timeline} />
+  <FooterCta data={landing.footerCta} />
 </BaseLayout>

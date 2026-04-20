@@ -1,0 +1,132 @@
+---
+import type { Products } from '@/types/landing';
+import SectionHeading from '@components/SectionHeading.astro';
+
+interface Props {
+  data: Products;
+}
+
+const { data } = Astro.props;
+
+const photoBgClass = (variant: 'rose' | 'lilac' | 'sand') => `ph-bg-${variant}`;
+const photoStroke = {
+  rose: 'var(--rose)',
+  lilac: 'var(--lilac)',
+  sand: 'var(--sand)',
+};
+const photoIconBg = {
+  rose: 'rgba(201,82,106,0.15)',
+  lilac: 'rgba(155,142,196,0.2)',
+  sand: 'rgba(212,184,150,0.25)',
+};
+const photoLabelColor = {
+  rose: 'var(--rose)',
+  lilac: 'var(--lilac)',
+  sand: '#7A5C3A',
+};
+---
+
+<section id="rutinas" class="products">
+  <SectionHeading
+    label={data.label}
+    title={data.title}
+    emphasis={data.titleEmphasis}
+    subtitle={data.subtitle}
+  />
+
+  <div class="products-grid">
+    {data.cards.map((card) => (
+      <article class:list={['product-card', { featured: card.featured }]}>
+        <div class:list={['product-photo', photoBgClass(card.photoVariant)]}>
+          {card.featured && card.featuredLabel && (
+            <>
+              <div class="product-featured-badge es">{card.featuredLabel.es}</div>
+              <div class="product-featured-badge en">{card.featuredLabel.en}</div>
+            </>
+          )}
+          <div class="no-img">
+            <div
+              class="ph-icon"
+              style={`width:48px;height:48px;background:${photoIconBg[card.photoVariant]};`}
+            >
+              <svg viewBox="0 0 24 24" style={`width:24px;height:24px;stroke:${photoStroke[card.photoVariant]};fill:none;stroke-width:1.5`}>
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <span style={`color:${photoLabelColor[card.photoVariant]};max-width:140px;`} class="es">{card.photoLabel.es}</span>
+            <span style={`color:${photoLabelColor[card.photoVariant]};max-width:140px;`} class="en">{card.photoLabel.en}</span>
+          </div>
+        </div>
+
+        <div class="product-body">
+          <div class="product-level" style={card.levelColor ? `color:${card.levelColor}` : undefined}>
+            <span class="es">{card.level.es}</span><span class="en">{card.level.en}</span>
+          </div>
+          <div class="product-name es">{card.name.es}</div>
+          <div class="product-name en">{card.name.en}</div>
+          <div class="product-desc es">{card.desc.es}</div>
+          <div class="product-desc en">{card.desc.en}</div>
+
+          <div class="product-includes">
+            <div class="product-includes-title es">Qué incluye</div>
+            <div class="product-includes-title en">What's included</div>
+            {card.includes.map((inc) => (
+              <div class="include-item">
+                <span class="include-dot"></span>
+                <span class="include-text es">{inc.es}</span>
+                <span class="include-text en">{inc.en}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="product-price-row">
+            <div class="product-price"><sup>$</sup>{card.price}</div>
+          </div>
+          <div class="product-btn">
+            <a href="#empezar" class="btn-primary">
+              <span class="es">{card.ctaLabel.es}</span><span class="en">{card.ctaLabel.en}</span>
+            </a>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="bundle">
+    <div>
+      <div class="bundle-badge">
+        <span class="es">{data.bundle.badge.es}</span><span class="en">{data.bundle.badge.en}</span>
+      </div>
+      <h3>
+        <span class="es">{data.bundle.title.es}</span><span class="en">{data.bundle.title.en}</span>
+      </h3>
+      <p class="bundle-desc es">{data.bundle.desc.es}</p>
+      <p class="bundle-desc en">{data.bundle.desc.en}</p>
+
+      <div class="bundle-includes">
+        {data.bundle.includes.map((item) => (
+          <div class="bundle-include">
+            <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            <span class="es">{item.es}</span><span class="en">{item.en}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="bundle-price-wrap">
+      <div class="bundle-strike">
+        <span class="es">{data.bundle.priceStrike.es}</span><span class="en">{data.bundle.priceStrike.en}</span>
+      </div>
+      <div class="bundle-price">
+        <sup>$</sup>
+        <span class="es">{data.bundle.priceLabel.es}</span><span class="en">{data.bundle.priceLabel.en}</span>
+      </div>
+      <div class="bundle-price-suffix">
+        <span class="es">{data.bundle.priceSuffix.es}</span><span class="en">{data.bundle.priceSuffix.en}</span>
+      </div>
+      <a href={data.bundle.cta.href} class="btn-primary bundle-cta">
+        <span class="es">{data.bundle.cta.label.es}</span><span class="en">{data.bundle.cta.label.en}</span>
+      </a>
+    </div>
+  </div>
+</section>

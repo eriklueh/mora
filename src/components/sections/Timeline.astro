@@ -1,0 +1,32 @@
+---
+import type { Timeline } from '@/types/landing';
+import SectionHeading from '@components/SectionHeading.astro';
+
+interface Props {
+  data: Timeline;
+}
+
+const { data } = Astro.props;
+---
+
+<section class="timeline-section">
+  <SectionHeading
+    label={data.label}
+    title={data.title}
+    emphasis={data.titleEmphasis}
+  />
+
+  <div class="timeline">
+    {data.steps.map((step) => (
+      <div class="timeline-step">
+        <div class:list={['timeline-dot', `dot-${step.dot}`]}>{step.dot}</div>
+        <div class="step-time es">{step.time.es}</div>
+        <div class="step-time en">{step.time.en}</div>
+        <div class="step-title es">{step.title.es}</div>
+        <div class="step-title en">{step.title.en}</div>
+        <div class="step-desc es">{step.desc.es}</div>
+        <div class="step-desc en">{step.desc.en}</div>
+      </div>
+    ))}
+  </div>
+</section>

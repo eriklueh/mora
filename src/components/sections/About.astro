@@ -1,0 +1,58 @@
+---
+import type { About } from '@/types/landing';
+import SectionHeading from '@components/SectionHeading.astro';
+
+interface Props {
+  data: About;
+}
+
+const { data } = Astro.props;
+---
+
+<section id="conoceme" class="about">
+  <div class="about-grid">
+    <div class="about-photo-wrap">
+      <div class="about-photo">
+        <div class="no-img">
+          <div class="ph-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <p class="es">{data.photoLabel.es}</p>
+          <p class="en">{data.photoLabel.en}</p>
+        </div>
+      </div>
+      <div class="about-photo-badge es">{data.photoBadge.es}</div>
+      <div class="about-photo-badge en">{data.photoBadge.en}</div>
+    </div>
+
+    <div class="about-right">
+      <SectionHeading
+        label={data.label}
+        title={data.title}
+        emphasis={data.titleEmphasis}
+        subtitle={data.subtitleLines}
+      />
+
+      <blockquote class="about-quote es">{data.quote.es}</blockquote>
+      <blockquote class="about-quote en">{data.quote.en}</blockquote>
+
+      <div class="about-certs">
+        {data.certs.map((cert) => (
+          <div class="cert-pill"><span class="cert-dot"></span>{cert}</div>
+        ))}
+      </div>
+
+      <div class="stats-row">
+        {data.stats.map((stat) => (
+          <div class="stat-item">
+            <div class="num">
+              <span class="es">{stat.num.es}</span><span class="en">{stat.num.en}</span>
+            </div>
+            <div class="lbl es">{stat.label.es}</div>
+            <div class="lbl en">{stat.label.en}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

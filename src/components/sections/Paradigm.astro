@@ -1,0 +1,30 @@
+---
+import type { Paradigm } from '@/types/landing';
+import SectionHeading from '@components/SectionHeading.astro';
+
+interface Props {
+  data: Paradigm;
+}
+
+const { data } = Astro.props;
+---
+
+<section class="paradigm">
+  <SectionHeading
+    label={data.label}
+    title={data.title}
+    emphasis={data.titleEmphasis}
+  />
+
+  <div class="pillars-grid">
+    {data.pillars.map((pillar) => (
+      <div class="pillar">
+        <div class="pillar-num">{pillar.num}</div>
+        <div class="pillar-title es">{pillar.title.es}</div>
+        <div class="pillar-title en">{pillar.title.en}</div>
+        <div class="pillar-desc es">{pillar.desc.es}</div>
+        <div class="pillar-desc en">{pillar.desc.en}</div>
+      </div>
+    ))}
+  </div>
+</section>

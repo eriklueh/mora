@@ -1,0 +1,14 @@
+---
+import type { LocaleString } from '@/types/landing';
+
+interface Props {
+  text: LocaleString;
+  class?: string;
+}
+
+const { text, class: className } = Astro.props;
+---
+
+<span class:list={[className]}>
+  <span class="es">{text.es}</span><span class="en">{text.en}</span>
+</span>

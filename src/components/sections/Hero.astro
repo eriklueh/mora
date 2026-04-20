@@ -1,53 +1,62 @@
 ---
-import type { HeroSection, Locale } from '@/types/sanity';
-import { t } from '@lib/i18n';
+import type { Hero } from '@/types/landing';
 
 interface Props {
-  data: HeroSection;
-  locale?: Locale;
+  data: Hero;
 }
 
-const { data, locale = 'es' } = Astro.props;
-
-const title = t(data.title, locale);
-const emphasis = t(data.titleEmphasis, locale);
+const { data } = Astro.props;
 ---
 
-<section class="py-20 md:py-28">
-  {data.tag && (
-    <p class="text-sm uppercase tracking-widest text-[color:var(--color-muted)]">
-      {t(data.tag, locale)}
-    </p>
-  )}
+<section class="hero">
+  <div class="hero-bg"></div>
 
-  {(title || emphasis) && (
-    <h1 class="mt-4 text-5xl md:text-6xl font-bold tracking-tight whitespace-pre-line">
-      {title}
-      {emphasis && <> <em class="text-[color:var(--color-accent)]">{emphasis}</em></>}
+  <div class="hero-left">
+    <span class="hero-tag">
+      <span class="es">{data.tag.es}</span><span class="en">{data.tag.en}</span>
+    </span>
+
+    <h1 class="hero-title">
+      <span class="es">{data.title.es} <em>{data.titleEmphasis.es}</em></span>
+      <span class="en">{data.title.en} <em>{data.titleEmphasis.en}</em></span>
     </h1>
-  )}
 
-  {data.subtitle && (
-    <p class="mt-6 max-w-xl text-lg text-[color:var(--color-muted)]">
-      {t(data.subtitle, locale)}
-    </p>
-  )}
+    {data.subtitleLines.map((line) => (
+      <>
+        <p class="hero-sub es">{line.es}</p>
+        <p class="hero-sub en">{line.en}</p>
+      </>
+    ))}
 
-  {data.ctas && data.ctas.length > 0 && (
-    <div class="mt-8 flex flex-wrap gap-3">
+    <div class="hero-ctas">
       {data.ctas.map((cta) => (
-        <a
-          href={cta.href}
-          class:list={[
-            'inline-flex items-center rounded-full px-6 py-3 text-sm font-medium transition',
-            cta.variant === 'outline'
-              ? 'border border-[color:var(--color-accent)] text-[color:var(--color-accent)] hover:bg-[color:var(--color-accent)]/10'
-              : 'bg-[color:var(--color-accent)] text-white hover:opacity-90',
-          ]}
-        >
-          {t(cta.label, locale)}
+        <a href={cta.href} class={cta.variant === 'outline' ? 'btn-outline' : 'btn-primary'}>
+          <span class="es">{cta.label.es}</span><span class="en">{cta.label.en}</span>
         </a>
       ))}
     </div>
-  )}
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-decor"></div>
+      <div class="photo-placeholder">
+        <div class="no-img">
+          <div class="ph-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <p class="es">{data.photoLabel.es}</p>
+          <p class="en">{data.photoLabel.en}</p>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <div class="badge-num">
+          {data.badge.value}
+          <small><span class="es">{data.badge.valueSuffix.es}</span><span class="en">{data.badge.valueSuffix.en}</span></small>
+        </div>
+        <div class="badge-label es">{data.badge.label.es}</div>
+        <div class="badge-label en">{data.badge.label.en}</div>
+      </div>
+    </div>
+  </div>
 </section>

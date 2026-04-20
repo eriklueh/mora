@@ -1,0 +1,33 @@
+---
+import type { Habits } from '@/types/landing';
+import SectionHeading from '@components/SectionHeading.astro';
+
+interface Props {
+  data: Habits;
+}
+
+const { data } = Astro.props;
+---
+
+<section id="habitos" class="habits">
+  <SectionHeading
+    label={data.label}
+    title={data.title}
+    emphasis={data.titleEmphasis}
+  />
+
+  <div class="habits-grid">
+    <div class="habit-card">
+      <div class="habit-quote es">{data.quote.es}</div>
+      <div class="habit-quote en">{data.quote.en}</div>
+
+      {data.tips.map((tip) => (
+        <div class="habit-tip">
+          <span class="tip-dot"></span>
+          <div class="tip-text es">{tip.text.es}</div>
+          <div class="tip-text en">{tip.text.en}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

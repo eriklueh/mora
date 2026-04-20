@@ -1,0 +1,61 @@
+---
+import type { Preview } from '@/types/landing';
+import SectionHeading from '@components/SectionHeading.astro';
+
+interface Props {
+  data: Preview;
+}
+
+const { data } = Astro.props;
+---
+
+<section id="preview" class="routine-section">
+  <SectionHeading
+    label={data.label}
+    title={data.title}
+    emphasis={data.titleEmphasis}
+    subtitle={data.subtitle}
+  />
+
+  <div class="preview-grid">
+    {data.cards.map((card) => (
+      <article class:list={['product-card', { featured: card.featured }]}>
+        <div class="preview-body">
+          <div class="product-level" style={card.levelColor ? `color:${card.levelColor}` : undefined}>
+            <span class="es">{card.level.es}</span><span class="en">{card.level.en}</span>
+          </div>
+          <div class="product-name es" style="margin-bottom:1rem">{card.name.es}</div>
+          <div class="product-name en" style="margin-bottom:1rem">{card.name.en}</div>
+
+          <div class="preview-meta">
+            {card.meta.map((m) => (
+              <span class="meta-item">
+                <span class="meta-dot"></span>
+                <span class="es">{m.es}</span><span class="en">{m.en}</span>
+              </span>
+            ))}
+          </div>
+
+          <div class="preview-days">
+            {card.days.map((d) => (
+              <div class:list={['preview-day', card.variant]}>
+                <span class="es">{d.es}</span><span class="en">{d.en}</span>
+              </div>
+            ))}
+            <div class="preview-extra">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0110 0v4"/>
+              </svg>
+              <span class="es">{card.extra.es}</span><span class="en">{card.extra.en}</span>
+            </div>
+          </div>
+
+          <a href={card.cta.href} class="btn-primary preview-cta">
+            <span class="es">{card.cta.label.es}</span><span class="en">{card.cta.label.en}</span>
+          </a>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

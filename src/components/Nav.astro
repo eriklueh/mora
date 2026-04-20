@@ -1,0 +1,56 @@
+---
+import type { NavLink } from '@/types/landing';
+
+interface Props {
+  logo: string;
+  links: NavLink[];
+}
+
+const { logo, links } = Astro.props;
+---
+
+<nav class="nav">
+  <div class="nav-logo">{logo}</div>
+  <div class="nav-links">
+    {links.map((link) => (
+      <a href={link.href}>
+        <span class="es">{link.label.es}</span><span class="en">{link.label.en}</span>
+      </a>
+    ))}
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button type="button" class="lang-btn active" data-set-lang="es">ES</button>
+      <button type="button" class="lang-btn" data-set-lang="en">EN</button>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const root = document.documentElement;
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-set-lang]');
+
+  function setLang(lang: 'es' | 'en') {
+    root.setAttribute('data-lang', lang);
+    buttons.forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.setLang === lang);
+    });
+    try {
+      localStorage.setItem('mora-lang', lang);
+    } catch {
+      /* storage disabled */
+    }
+  }
+
+  try {
+    const saved = localStorage.getItem('mora-lang');
+    if (saved === 'es' || saved === 'en') setLang(saved);
+  } catch {
+    /* storage disabled */
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.setLang;
+      if (lang === 'es' || lang === 'en') setLang(lang);
+    });
+  });
+</script>

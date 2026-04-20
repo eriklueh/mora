@@ -1,83 +1,105 @@
-# Mora Ebook
+# Mora Sampaio — Landing
 
-Migration of the Mora ebook from a monolithic HTML file to a statically-generated site powered by [Astro](https://astro.build) and [Sanity CMS](https://www.sanity.io).
+Bilingual (ES/EN) static landing page for Mora Sampaio's training programs,
+built with [Astro](https://astro.build) and Tailwind v4.
 
 ## Stack
 
-- **Astro** (static output) + TypeScript strict
-- **Tailwind CSS** for utility styling
-- **MDX** for authoring flexibility
-- **Sanity v3** as headless CMS (Free tier)
-- **@sanity/client** + GROQ for content fetching at build time
+- **Astro 6** (static output)
+- **Tailwind v4** via `@tailwindcss/vite`
+- **TypeScript** strict mode
+- **Zero runtime dependencies** — everything renders at build time
 
-## Repository layout
+## Project layout
 
 ```
 mora/
-├── legacy/               # Original HTML ebook kept as historical reference
-│   └── mora_ebook_v4.html
-├── scripts/              # Dev/build utilities (e.g. legacy HTML parser)
-├── src/                  # Astro app
+├── legacy/
+│   └── mora_ebook_v4.html     # Original monolithic HTML (historical reference)
+├── public/
+│   └── favicon.svg
+├── src/
 │   ├── components/
+│   │   ├── Bilingual.astro     # <span class="es">…</span><span class="en">…</span>
+│   │   ├── Nav.astro           # Top nav with ES/EN toggle
+│   │   ├── SectionHeading.astro # label + title + emphasis + subtitle
+│   │   └── sections/           # One file per landing section
+│   │       ├── Hero.astro
+│   │       ├── About.astro
+│   │       ├── Paradigm.astro
+│   │       ├── Products.astro
+│   │       ├── Preview.astro
+│   │       ├── Habits.astro
+│   │       ├── Timeline.astro
+│   │       └── FooterCta.astro
+│   ├── content/
+│   │   └── landing.ts          # Single source of truth for all copy (ES/EN)
 │   ├── layouts/
-│   ├── lib/              # sanity client, GROQ queries
+│   │   └── BaseLayout.astro
 │   ├── pages/
+│   │   └── index.astro         # Composes all sections
 │   ├── styles/
+│   │   └── global.css          # Design tokens + ported section styles
 │   └── types/
-├── studio/               # Sanity Studio v3 (independent sub-project)
-│   └── schemas/
+│       └── landing.ts          # Types for every section's content
 ├── astro.config.mjs
-└── package.json          # root scripts that orchestrate both projects
+├── tsconfig.json
+└── package.json
 ```
 
-The project uses a **simple two-project layout** (not a formal monorepo): Astro lives at the root, Sanity Studio lives under `studio/` with its own `package.json`. Root scripts delegate into `studio/` via `cd`.
+### How content is modeled
+
+All copy lives in `src/content/landing.ts` as a single typed `LandingContent`
+object. Every piece of translatable text is a `LocaleString`:
+
+```ts
+{ es: "Tu cuerpo.", en: "Your body." }
+```
+
+Components render both languages inline:
+
+```html
+<span class="es">Tu cuerpo.</span><span class="en">Your body.</span>
+```
+
+and `src/styles/global.css` toggles visibility via the `data-lang` attribute on
+`<html>`:
+
+```css
+[data-lang="es"] .en { display: none; }
+[data-lang="en"] .es { display: none; }
+```
+
+The ES/EN buttons in `<Nav>` set that attribute (and persist the choice in
+`localStorage`). No hydration, no framework — just a small inline `<script>`.
+
+### Adding / editing content
+
+Edit `src/content/landing.ts`. Types in `src/types/landing.ts` will tell you
+exactly what every section expects. To add a new program card, push an entry
+into `landing.products.cards` and it renders automatically.
+
+### Adding a new section
+
+1. Add its type to `src/types/landing.ts` and plug it into `LandingContent`.
+2. Add data under a new key in `src/content/landing.ts`.
+3. Create `src/components/sections/NewSection.astro` following the pattern.
+4. Import and compose it in `src/pages/index.astro`.
 
 ## Getting started
 
-Install dependencies (once, at the root):
-
 ```bash
 npm install
-cd studio && npm install && cd ..
+npm run dev            # http://localhost:4321
+npm run build          # static site -> ./dist
+npm run preview        # preview the production build
+npm run typecheck      # astro check
 ```
 
-Copy env template and fill in the Sanity project ID:
+## Deploy
+
+The `main` branch auto-deploys to Vercel (`mora-iota.vercel.app`). Manual deploy:
 
 ```bash
-cp .env.example .env.local
-# Edit .env.local with your SANITY_PROJECT_ID
+vercel --prod
 ```
-
-### Dev
-
-```bash
-npm run dev            # Astro at http://localhost:4321
-npm run studio:dev     # Sanity Studio at http://localhost:3333
-```
-
-### Build
-
-```bash
-npm run build          # Astro static site → ./dist
-npm run preview        # Preview the built site
-```
-
-### Deploy Sanity Studio
-
-```bash
-npm run studio:deploy  # Deploys studio to *.sanity.studio (free)
-```
-
-## Environment variables
-
-| Variable              | Purpose                                      |
-|-----------------------|----------------------------------------------|
-| `SANITY_PROJECT_ID`   | Sanity project ID (from sanity.io dashboard) |
-| `SANITY_DATASET`      | Usually `production`                         |
-| `SANITY_API_VERSION`  | Locked API date, e.g. `2025-01-01`           |
-
-See `.env.example` for the template.
-
-## Status
-
-Bootstrap phase: scaffold in place, content migration pending.

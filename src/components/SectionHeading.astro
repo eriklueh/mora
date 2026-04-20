@@ -1,0 +1,32 @@
+---
+import type { LocaleString } from '@/types/landing';
+
+interface Props {
+  label?: LocaleString;
+  title: LocaleString;
+  emphasis?: LocaleString;
+  subtitle?: LocaleString | LocaleString[];
+}
+
+const { label, title, emphasis, subtitle } = Astro.props;
+const subtitles = subtitle ? (Array.isArray(subtitle) ? subtitle : [subtitle]) : [];
+---
+
+{label && (
+  <>
+    <div class="section-label es">{label.es}</div>
+    <div class="section-label en">{label.en}</div>
+  </>
+)}
+
+<h2 class="section-title">
+  <span class="es">{title.es}{emphasis && <> <em>{emphasis.es}</em></>}</span>
+  <span class="en">{title.en}{emphasis && <> <em>{emphasis.en}</em></>}</span>
+</h2>
+
+{subtitles.map((s) => (
+  <>
+    <p class="section-sub es">{s.es}</p>
+    <p class="section-sub en">{s.en}</p>
+  </>
+))}
