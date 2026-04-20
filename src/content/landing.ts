@@ -1,5 +1,15 @@
 import type { LandingContent } from '@/types/landing';
 
+// Single source of truth for the WhatsApp number used by every CTA that
+// purchases or contacts. Replace with the real number in international format
+// (country code + area code + number, digits only, no +).
+const WHATSAPP_PHONE = '549XXXXXXXXXX';
+
+function wa(message: string): string {
+  const phone = WHATSAPP_PHONE.replace(/\D/g, '');
+  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+}
+
 export const landing: LandingContent = {
   meta: {
     title: 'Mora Sampaio — Entrenamiento',
@@ -7,6 +17,10 @@ export const landing: LandingContent = {
       es: 'Rutinas para ganar músculo, progresar y sentirte segura en el gym.',
       en: 'Training programs to build muscle, progress, and feel confident in the gym.',
     },
+  },
+
+  contact: {
+    whatsapp: WHATSAPP_PHONE,
   },
 
   nav: {
@@ -175,6 +189,9 @@ export const landing: LandingContent = {
           en: 'Beginner / first time photo',
         },
         ctaLabel: { es: 'Quiero este programa', en: 'I want this program' },
+        ctaHref: wa(
+          '¡Hola Mora! Quiero empezar con "Tu primera vez" (Principiante · USD 19). ¿Me contás cómo sigue?',
+        ),
       },
       {
         level: { es: 'Intermedio', en: 'Intermediate' },
@@ -208,6 +225,9 @@ export const landing: LandingContent = {
           en: 'Intermediate training photo',
         },
         ctaLabel: { es: 'Quiero este programa', en: 'I want this program' },
+        ctaHref: wa(
+          '¡Hola Mora! Me interesa "Estoy lista para más" (Intermedio · USD 35). ¿Cómo lo consigo?',
+        ),
         featured: true,
         featuredLabel: { es: 'Más popular', en: 'Most popular' },
         levelColor: 'var(--lilac)',
@@ -251,6 +271,9 @@ export const landing: LandingContent = {
           en: 'Your challenge / real training photo',
         },
         ctaLabel: { es: 'Quiero el challenge', en: 'I want the challenge' },
+        ctaHref: wa(
+          '¡Hola Mora! Me anoto al "Entrena como yo" — Glute & Strength Challenge 8 semanas (USD 59). ¿Cuál es el siguiente paso?',
+        ),
         levelColor: '#7A5C3A',
       },
     ],
@@ -283,7 +306,9 @@ export const landing: LandingContent = {
       priceSuffix: { es: 'programa + recetas', en: 'program + recipes' },
       cta: {
         label: { es: 'Quiero el bundle', en: 'I want the bundle' },
-        href: '#empezar',
+        href: wa(
+          '¡Hola Mora! Quiero el bundle (programa + 10 recetas fit). ¿Cómo lo armamos?',
+        ),
         variant: 'primary',
       },
     },
@@ -319,7 +344,9 @@ export const landing: LandingContent = {
             es: 'Quiero este programa — $19',
             en: 'I want this program — $19',
           },
-          href: '#rutinas',
+          href: wa(
+            '¡Hola Mora! Quiero empezar con "Tu primera vez" (Principiante · USD 19). ¿Me contás cómo sigue?',
+          ),
           variant: 'primary',
         },
         variant: 'rose',
@@ -346,7 +373,9 @@ export const landing: LandingContent = {
             es: 'Quiero este programa — $35',
             en: 'I want this program — $35',
           },
-          href: '#rutinas',
+          href: wa(
+            '¡Hola Mora! Me interesa "Estoy lista para más" (Intermedio · USD 35). ¿Cómo lo consigo?',
+          ),
           variant: 'primary',
         },
         variant: 'lilac',
@@ -380,7 +409,9 @@ export const landing: LandingContent = {
         },
         cta: {
           label: { es: 'Quiero el challenge — $59', en: 'I want the challenge — $59' },
-          href: '#rutinas',
+          href: wa(
+            '¡Hola Mora! Me anoto al "Entrena como yo" — Glute & Strength Challenge 8 semanas (USD 59). ¿Cuál es el siguiente paso?',
+          ),
           variant: 'primary',
         },
         variant: 'sand',
@@ -472,8 +503,13 @@ export const landing: LandingContent = {
       en: "You don't need to be ready. You don't need to have it all figured out. You just need to show up. We'll do the rest together.",
     },
     cta: {
-      label: { es: 'Quiero empezar hoy', en: 'I want to start today' },
-      href: '#rutinas',
+      label: {
+        es: 'Hablar con Mora por WhatsApp',
+        en: 'Message Mora on WhatsApp',
+      },
+      href: wa(
+        '¡Hola Mora! Me gustaría empezar pero no tengo claro cuál programa elegir. ¿Me ayudás?',
+      ),
       variant: 'primary',
     },
     signoff: '— Mora',

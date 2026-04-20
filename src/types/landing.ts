@@ -40,6 +40,7 @@ export interface ProductCard {
   photoVariant: 'rose' | 'lilac' | 'sand';
   photoLabel: LocaleString;
   ctaLabel: LocaleString;
+  ctaHref: string;
   featured?: boolean;
   featuredLabel?: LocaleString;
   levelColor?: string;
@@ -157,8 +158,13 @@ export interface FooterCta {
   signoff: string;
 }
 
+export interface Contact {
+  whatsapp: string;
+}
+
 export interface LandingContent {
   meta: { title: string; description: LocaleString };
+  contact: Contact;
   nav: { logo: string; links: NavLink[] };
   hero: Hero;
   about: About;

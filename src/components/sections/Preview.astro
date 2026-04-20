@@ -51,7 +51,12 @@ const { data } = Astro.props;
             </div>
           </div>
 
-          <a href={card.cta.href} class="btn-primary preview-cta">
+          <a
+            href={card.cta.href}
+            class="btn-primary preview-cta"
+            target={card.cta.href.startsWith('http') ? '_blank' : undefined}
+            rel={card.cta.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+          >
             <span class="es">{card.cta.label.es}</span><span class="en">{card.cta.label.en}</span>
           </a>
         </div>
