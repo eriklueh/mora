@@ -1,0 +1,33 @@
+{
+  "name": "mora",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "typecheck": "astro check",
+    "studio:dev": "cd studio && npm run dev",
+    "studio:build": "cd studio && npm run build",
+    "studio:deploy": "cd studio && npm run deploy",
+    "parse-legacy": "node scripts/parse-legacy.mjs"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.8",
+    "@astrojs/mdx": "^5.0.3",
+    "@astrojs/sitemap": "^3.7.2",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.8",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@portabletext/to-html": "^5.0.2",
+    "@portabletext/types": "^4.0.2",
+    "@sanity/client": "^7.21.0",
+    "groq": "^5.21.0"
+  }
+}
