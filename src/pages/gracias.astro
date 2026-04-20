@@ -1,0 +1,214 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { landing } from '@/content/landing';
+
+const description = {
+  es: '¡Gracias por tu compra! Tu programa viene en camino.',
+  en: 'Thank you for your purchase! Your program is on its way.',
+};
+
+const waHref = `https://wa.me/${landing.contact.whatsapp.replace(/\D/g, '')}`;
+---
+
+<BaseLayout title="¡Gracias! — Mora Sampaio" description={description}>
+  <section class="thanks">
+    <div class="thanks-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+
+    <p class="thanks-label">
+      <span class="es">¡Listo!</span><span class="en">All set!</span>
+    </p>
+
+    <h1 class="thanks-title">
+      <span class="es">Gracias por <em>entrenar conmigo.</em></span>
+      <span class="en">Thanks for <em>training with me.</em></span>
+    </h1>
+
+    <div class="thanks-cards">
+      <div class="thanks-card">
+        <div class="thanks-step">01</div>
+        <h2>
+          <span class="es">Revisá tu email</span>
+          <span class="en">Check your email</span>
+        </h2>
+        <p>
+          <span class="es">Tu programa en PDF llega en los próximos minutos al mail de la compra. Si no lo ves, revisá spam o promociones.</span>
+          <span class="en">Your program PDF arrives in the next few minutes to the email you used at checkout. If it&rsquo;s not there, check spam or promotions.</span>
+        </p>
+      </div>
+
+      <div class="thanks-card">
+        <div class="thanks-step">02</div>
+        <h2>
+          <span class="es">¿Compraste el Challenge?</span>
+          <span class="en">Bought the Challenge?</span>
+        </h2>
+        <p>
+          <span class="es">Te escribo por WhatsApp en las próximas 24h para coordinar tu sesión 1 a 1.</span>
+          <span class="en">I&rsquo;ll message you on WhatsApp within 24h to schedule your 1-on-1 session.</span>
+        </p>
+      </div>
+
+      <div class="thanks-card">
+        <div class="thanks-step">03</div>
+        <h2>
+          <span class="es">¿Alguna duda?</span>
+          <span class="en">Any questions?</span>
+        </h2>
+        <p>
+          <span class="es">Escribime cuando quieras y te respondo yo misma.</span>
+          <span class="en">Message me anytime and I&rsquo;ll reply personally.</span>
+        </p>
+        <a class="btn-primary thanks-cta" href={waHref} target="_blank" rel="noopener noreferrer">
+          <span class="es">Escribirme por WhatsApp</span>
+          <span class="en">Message me on WhatsApp</span>
+        </a>
+      </div>
+    </div>
+
+    <a href="/" class="thanks-home">
+      <span class="es">← Volver al inicio</span><span class="en">← Back home</span>
+    </a>
+
+    <p class="thanks-signoff">— Mora</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .thanks {
+    min-height: calc(100vh - 0px);
+    padding: 8rem 1.5rem 5rem;
+    max-width: 920px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .thanks-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--rose-light);
+    color: var(--rose-dark);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+    animation: thanksPop 0.55s cubic-bezier(0.22, 1.4, 0.42, 1) both;
+  }
+  .thanks-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+  @keyframes thanksPop {
+    from { transform: scale(0.4); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .thanks-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 0.75rem;
+  }
+
+  .thanks-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 3rem;
+  }
+  .thanks-title em {
+    color: var(--rose);
+    font-style: italic;
+  }
+
+  .thanks-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+    text-align: left;
+  }
+
+  .thanks-card {
+    background: #fff;
+    border: 1px solid rgba(201, 82, 106, 0.12);
+    border-radius: 18px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out);
+  }
+  .thanks-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(201, 82, 106, 0.28);
+  }
+
+  .thanks-step {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--rose-light);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+  .thanks-card h2 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--charcoal);
+    margin-bottom: 0.55rem;
+    line-height: 1.25;
+  }
+  .thanks-card p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+    flex: 1;
+  }
+  .thanks-cta {
+    align-self: flex-start;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.72rem;
+  }
+
+  .thanks-home {
+    display: inline-block;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    transition: color var(--dur-fast), background var(--dur-fast);
+  }
+  .thanks-home:hover {
+    color: var(--rose);
+    background: rgba(201, 82, 106, 0.05);
+  }
+
+  .thanks-signoff {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 760px) {
+    .thanks {
+      padding: 6rem 1.25rem 4rem;
+    }
+    .thanks-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
