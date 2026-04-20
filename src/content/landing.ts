@@ -504,8 +504,8 @@ export const landing: LandingContent = {
     },
     cta: {
       label: {
-        es: 'Hablar con Mora por WhatsApp',
-        en: 'Message Mora on WhatsApp',
+        es: 'Escribime por WhatsApp',
+        en: 'Message me on WhatsApp',
       },
       href: wa(
         '¡Hola Mora! Me gustaría empezar pero no tengo claro cuál programa elegir. ¿Me ayudás?',
