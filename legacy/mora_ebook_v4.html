@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mora Sampaio — Entrenamiento</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF7F3;
+  --warm-white: #FDFBF8;
+  --charcoal: #2A2520;
+  --muted: #7A756E;
+  --rose: #C9526A;
+  --rose-light: #F5DDE3;
+  --rose-pale: #FBF0F3;
+  --rose-dark: #8B2D42;
+  --lilac: #9B8EC4;
+  --lilac-light: #EDE9F8;
+  --sand: #D4B896;
+  --sand-light: #F7F0E8;
+  --green: #4A7C6F;
+  --green-light: #DCF0EB;
+  --blush: #F2C5CE;
+  --section-bg: #FDF5F7;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--charcoal);
+  overflow-x: hidden;
+}
+
+/* ── LANG TOGGLE ── */
+[data-lang="es"] .en { display: none; }
+[data-lang="en"] .es { display: none; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 1.1rem 3.5rem;
+  background: rgba(250,247,243,0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(201,82,106,0.1);
+}
+.nav-logo {
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem; color:var(--rose-dark); letter-spacing:0.02em;
+}
+.nav-links { display:flex; gap:2rem; align-items:center; }
+.nav-links a {
+  font-size:0.78rem; color:var(--muted); text-decoration:none;
+  letter-spacing:0.07em; text-transform:uppercase; transition:color .2s;
+}
+.nav-links a:hover { color:var(--rose); }
+.lang-toggle {
+  display:flex; align-items:center; gap:0;
+  border:1px solid rgba(201,82,106,0.3); border-radius:20px; overflow:hidden;
+  margin-left:1rem;
+}
+.lang-btn {
+  background:none; border:none; cursor:pointer;
+  font-size:0.72rem; font-family:'DM Sans',sans-serif;
+  padding:0.3rem 0.75rem; color:var(--muted);
+  letter-spacing:0.06em; text-transform:uppercase; transition:all .2s;
+}
+.lang-btn.active { background:var(--rose); color:#fff; }
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh;
+  display:grid; grid-template-columns:1fr 1fr;
+  align-items:center; padding-top:5rem;
+  position:relative; overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 55% 70% at 75% 35%, #F5DDE3 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 15% 75%, #EDE9F8 0%, transparent 65%),
+    radial-gradient(ellipse 30% 40% at 50% 10%, #F7F0E8 0%, transparent 55%);
+}
+.hero-left { position:relative; z-index:1; padding:4rem 3rem 4rem 5rem; }
+.hero-tag {
+  display:inline-block; font-size:0.72rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--rose);
+  border:1px solid var(--rose); border-radius:20px;
+  padding:0.35rem 1rem; margin-bottom:1.75rem;
+}
+.hero-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.6rem,4.5vw,4rem); line-height:1.1;
+  color:var(--charcoal); margin-bottom:1.25rem;
+}
+.hero-title em { color:var(--rose); font-style:italic; }
+.hero-sub {
+  font-size:0.97rem; color:var(--muted); line-height:1.75;
+  max-width:420px; margin-bottom:2rem; font-weight:300;
+}
+.hero-ctas { display:flex; gap:1rem; flex-wrap:wrap; }
+.btn-primary {
+  background:var(--rose); color:#fff; border:none;
+  padding:0.85rem 1.9rem; border-radius:4px; font-size:0.82rem;
+  font-family:'DM Sans',sans-serif; font-weight:500; cursor:pointer;
+  letter-spacing:0.05em; text-transform:uppercase;
+  transition:background .2s,transform .15s; text-decoration:none; display:inline-block;
+}
+.btn-primary:hover { background:var(--rose-dark); transform:translateY(-1px); }
+.btn-outline {
+  background:transparent; color:var(--charcoal);
+  border:1px solid rgba(42,37,32,0.35); padding:0.85rem 1.9rem;
+  border-radius:4px; font-size:0.82rem; font-family:'DM Sans',sans-serif;
+  cursor:pointer; letter-spacing:0.05em; text-transform:uppercase;
+  transition:all .2s; text-decoration:none; display:inline-block;
+}
+.btn-outline:hover { background:var(--charcoal); color:var(--cream); }
+
+/* HERO PHOTO SIDE */
+.hero-right {
+  position:relative; z-index:1;
+  height:100vh; display:flex; align-items:center; justify-content:center;
+}
+.hero-photo-wrap {
+  position:relative; width:360px; height:480px;
+}
+.hero-photo-decor {
+  position:absolute; top:30px; left:20px; right:-20px; bottom:-20px;
+  background:var(--rose-light); border-radius:24px;
+  opacity:0.5;
+}
+.photo-placeholder {
+  position:absolute; inset:0;
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid rgba(201,82,106,0.15);
+  box-shadow:0 20px 60px rgba(0,0,0,0.07);
+}
+.photo-placeholder img {
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.photo-placeholder .no-img {
+  width:100%; height:100%;
+  background:linear-gradient(160deg, var(--rose-pale) 0%, var(--rose-light) 60%, #EDE9F8 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:1rem;
+}
+.photo-placeholder .no-img .ph-icon {
+  width:64px; height:64px; border-radius:50%;
+  background:rgba(201,82,106,0.15);
+  display:flex; align-items:center; justify-content:center;
+}
+.photo-placeholder .no-img .ph-icon svg { width:32px; height:32px; stroke:var(--rose); fill:none; stroke-width:1.5; }
+.photo-placeholder .no-img p { font-size:0.8rem; color:var(--rose); text-align:center; line-height:1.6; max-width:180px; }
+.hero-badge {
+  position:absolute; bottom:-16px; right:-16px;
+  background:#fff; border:1px solid rgba(201,82,106,0.15);
+  border-radius:16px; padding:1rem 1.25rem;
+  box-shadow:0 8px 24px rgba(0,0,0,0.07);
+  min-width:180px;
+}
+.badge-num { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--rose); line-height:1; }
+.badge-label { font-size:0.75rem; color:var(--muted); margin-top:4px; line-height:1.4; }
+
+/* ── SECTIONS ── */
+section { padding:6rem 5rem; position:relative; }
+.section-label { font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--rose); margin-bottom:0.85rem; }
+.section-title { font-family:'Playfair Display',serif; font-size:clamp(1.9rem,3.2vw,2.8rem); line-height:1.15; margin-bottom:1.25rem; }
+.section-title em { color:var(--rose); font-style:italic; }
+.section-sub { font-size:0.97rem; color:var(--muted); line-height:1.75; max-width:540px; font-weight:300; }
+
+/* ── ABOUT ── */
+.about { background:var(--warm-white); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+.about-photo-wrap { position:relative; }
+.about-photo {
+  width:100%; aspect-ratio:3/4; border-radius:20px; overflow:hidden;
+  border:1px solid rgba(201,82,106,0.12);
+}
+.about-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+.about-photo .no-img {
+  width:100%; height:100%;
+  background:linear-gradient(135deg, var(--rose-pale) 0%, var(--rose-light) 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem;
+  min-height:420px;
+}
+.about-photo .no-img p { font-size:0.78rem; color:var(--rose); text-align:center; max-width:160px; line-height:1.6; }
+.about-photo-badge {
+  position:absolute; bottom:-16px; left:50%; transform:translateX(-50%);
+  background:var(--rose); color:#fff; border-radius:40px;
+  padding:0.6rem 1.5rem; font-size:0.78rem; letter-spacing:0.06em;
+  text-transform:uppercase; white-space:nowrap; font-weight:500;
+}
+.about-right { }
+.about-quote {
+  font-family:'Playfair Display',serif; font-size:1.25rem; font-style:italic;
+  color:var(--charcoal); line-height:1.6;
+  border-left:3px solid var(--rose); padding-left:1.5rem; margin:1.75rem 0;
+}
+.about-certs { display:flex; flex-direction:column; gap:0.65rem; margin-top:1.5rem; }
+.cert-pill {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  background:var(--cream); border:1px solid rgba(0,0,0,0.07);
+  border-radius:40px; padding:0.45rem 1rem; font-size:0.8rem;
+  color:var(--charcoal); width:fit-content;
+}
+.cert-dot { width:7px; height:7px; border-radius:50%; background:var(--rose); flex-shrink:0; }
+.stats-row { display:flex; gap:1.25rem; margin-top:2rem; flex-wrap:wrap; }
+.stat-item { background:var(--cream); border-radius:14px; padding:1.25rem 1.5rem; flex:1; min-width:120px; }
+.stat-item .num { font-family:'Playfair Display',serif; font-size:2rem; color:var(--rose); line-height:1; }
+.stat-item .lbl { font-size:0.75rem; color:var(--muted); margin-top:4px; line-height:1.5; }
+
+/* ── PARADIGM ── */
+.paradigm {
+  background:var(--section-bg);
+  border-top:1px solid rgba(201,82,106,0.12);
+  border-bottom:1px solid rgba(201,82,106,0.12);
+}
+.pillars-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.75rem; margin-top:2.5rem; }
+.pillar {
+  background:#fff; border:1px solid rgba(201,82,106,0.12);
+  border-radius:16px; padding:1.75rem 1.5rem;
+}
+.pillar-num { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--rose-light); margin-bottom:0.5rem; }
+.pillar-title { font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--charcoal); margin-bottom:0.6rem; }
+.pillar-desc { font-size:0.84rem; color:var(--muted); line-height:1.7; }
+
+/* ── PRODUCTS ── */
+.products { background:var(--warm-white); }
+.products-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.75rem; margin-top:3rem; }
+.product-card {
+  background:#fff; border:1px solid rgba(0,0,0,0.07);
+  border-radius:20px; overflow:hidden;
+  display:flex; flex-direction:column;
+  transition:transform .2s, box-shadow .2s;
+}
+.product-card:hover { transform:translateY(-4px); box-shadow:0 16px 48px rgba(0,0,0,0.08); }
+.product-card.featured { border:2px solid var(--rose); }
+.product-photo { width:100%; aspect-ratio:4/3; overflow:hidden; background:var(--rose-pale); position:relative; }
+.product-photo img { width:100%; height:100%; object-fit:cover; }
+.product-photo .no-img {
+  width:100%; height:100%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:0.5rem; padding:1rem;
+}
+.product-photo .no-img span { font-size:0.72rem; color:var(--rose); text-align:center; line-height:1.5; }
+.product-featured-badge {
+  position:absolute; top:12px; right:12px;
+  background:var(--rose); color:#fff; font-size:0.68rem;
+  letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.75rem;
+  border-radius:20px; font-weight:500;
+}
+.product-body { padding:1.5rem 1.5rem 2rem; flex:1; display:flex; flex-direction:column; }
+.product-level { font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--rose); margin-bottom:0.5rem; }
+.product-name { font-family:'Playfair Display',serif; font-size:1.3rem; line-height:1.2; margin-bottom:0.5rem; }
+.product-desc { font-size:0.82rem; color:var(--muted); line-height:1.65; margin-bottom:1.25rem; flex:1; }
+.product-includes { margin-bottom:1.5rem; }
+.product-includes-title { font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:0.6rem; }
+.include-item { display:flex; align-items:flex-start; gap:0.5rem; padding:0.3rem 0; }
+.include-dot { width:5px; height:5px; border-radius:50%; background:var(--rose); margin-top:6px; flex-shrink:0; }
+.include-text { font-size:0.8rem; color:var(--charcoal); line-height:1.5; }
+.product-price-row { display:flex; align-items:flex-end; justify-content:space-between; margin-top:auto; }
+.product-price { font-family:'Playfair Display',serif; font-size:2rem; color:var(--charcoal); line-height:1; }
+.product-price sup { font-size:1rem; color:var(--rose); vertical-align:super; }
+.product-btn { margin-top:1rem; width:100%; text-align:center; }
+
+/* photo placeholder bg variants */
+.ph-bg-1 { background:linear-gradient(145deg, #FBF0F3 0%, #F5DDE3 100%); }
+.ph-bg-2 { background:linear-gradient(145deg, #EDE9F8 0%, #DDD5F5 100%); }
+.ph-bg-3 { background:linear-gradient(145deg, #F7F0E8 0%, #EDD9C5 100%); }
+
+/* ── ROUTINE DETAIL ── */
+.routine-section { }
+.tabs { display:flex; gap:0; border-bottom:1px solid rgba(0,0,0,0.08); margin-bottom:3rem; }
+.tab-btn {
+  padding:0.9rem 2rem; font-size:0.8rem; font-family:'DM Sans',sans-serif;
+  background:none; border:none; cursor:pointer; color:var(--muted);
+  font-weight:500; letter-spacing:0.05em; border-bottom:2px solid transparent;
+  margin-bottom:-1px; transition:all .2s; text-transform:uppercase; white-space:nowrap;
+}
+.tab-btn.active { color:var(--rose); border-bottom-color:var(--rose); }
+.tab-content { display:none; }
+.tab-content.active { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+.tab-content.wide { display:none; }
+.tab-content.wide.active { display:block; }
+
+.routine-header { margin-bottom:2rem; }
+.routine-badge { display:inline-block; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.3rem 0.9rem; border-radius:20px; margin-bottom:0.75rem; }
+.rb-rose { background:var(--rose-light); color:var(--rose-dark); }
+.rb-lilac { background:var(--lilac-light); color:#4A3F7A; }
+.rb-sand { background:var(--sand-light); color:#7A5C3A; }
+.routine-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,2.8vw,2.5rem); line-height:1.15; }
+.routine-title em { font-style:italic; }
+.routine-meta { display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:1rem; }
+.meta-item { font-size:0.8rem; color:var(--muted); display:flex; align-items:center; gap:0.4rem; }
+.meta-dot { width:5px; height:5px; border-radius:50%; background:var(--rose); }
+
+.day-block { margin-bottom:1.5rem; }
+.day-header { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem; }
+.day-label { font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); }
+.day-title { font-weight:500; font-size:0.95rem; color:var(--charcoal); }
+.exercise-list { list-style:none; }
+.exercise-list li {
+  display:flex; align-items:flex-start; gap:0.75rem;
+  padding:0.6rem 0; border-bottom:1px solid rgba(0,0,0,0.04);
+  font-size:0.84rem;
+}
+.exercise-list li:last-child { border-bottom:none; }
+.ex-num { width:20px; height:20px; border-radius:50%; background:var(--rose-light); color:var(--rose-dark); font-size:0.68rem; font-weight:500; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+.ex-name { flex:1; color:var(--charcoal); }
+.ex-sets { font-size:0.78rem; color:var(--rose); font-weight:500; white-space:nowrap; }
+
+.warmup-box { background:var(--sand-light); border-radius:12px; padding:1.25rem 1.4rem; margin-bottom:1.25rem; }
+.warmup-label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:#7A5C3A; margin-bottom:0.6rem; font-weight:500; }
+.warmup-list { list-style:none; }
+.warmup-list li { font-size:0.82rem; color:#5A3C1A; padding:3px 0; }
+.warmup-list li::before { content:"→ "; color:var(--sand); }
+
+.nota-box { background:var(--lilac-light); border:1px solid rgba(155,142,196,0.25); border-radius:12px; padding:1.25rem 1.4rem; margin-top:1rem; }
+.nota-label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:#4A3F7A; margin-bottom:0.4rem; font-weight:500; }
+.nota-text { font-size:0.83rem; color:#3A306A; line-height:1.65; font-style:italic; }
+
+/* CHALLENGE LAYOUT */
+.challenge-grid { display:grid; grid-template-columns:1.1fr 0.9fr; gap:4rem; margin-top:2rem; }
+.challenge-week-table { width:100%; border-collapse:collapse; margin-top:1rem; }
+.challenge-week-table th { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); padding:0.5rem 0.75rem; border-bottom:2px solid rgba(0,0,0,0.08); text-align:left; }
+.challenge-week-table td { font-size:0.82rem; padding:0.65rem 0.75rem; border-bottom:1px solid rgba(0,0,0,0.04); vertical-align:top; }
+.challenge-week-table tr:last-child td { border-bottom:none; }
+.week-badge { display:inline-block; font-size:0.68rem; padding:2px 8px; border-radius:10px; font-weight:500; }
+.wb-normal { background:var(--rose-light); color:var(--rose-dark); }
+.wb-heavy { background:#DCF0EB; color:#2A5E53; }
+.wb-deload { background:#EDE9F8; color:#4A3F7A; }
+.wb-pr { background:var(--sand-light); color:#7A5C3A; }
+
+.progression-card { background:var(--cream); border-radius:16px; padding:1.75rem; }
+.prog-title { font-family:'Playfair Display',serif; font-size:1.05rem; margin-bottom:0.5rem; }
+.prog-desc { font-size:0.82rem; color:var(--muted); line-height:1.65; margin-bottom:1.25rem; }
+.prog-example { background:#fff; border:1px solid rgba(0,0,0,0.06); border-radius:10px; padding:1rem 1.25rem; }
+.prog-ex-title { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:0.75rem; }
+.prog-row { display:flex; justify-content:space-between; align-items:center; padding:0.4rem 0; border-bottom:1px solid rgba(0,0,0,0.04); font-size:0.82rem; }
+.prog-row:last-child { border-bottom:none; }
+.prog-row .semana { color:var(--muted); }
+.prog-row .kg { color:var(--charcoal); font-weight:500; }
+.prog-row .kg.deload { color:var(--lilac); }
+.prog-row .kg.pr { color:var(--rose); font-weight:700; }
+
+.includes-grid-big { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:1.5rem; }
+.inc-card { background:#fff; border:1px solid rgba(0,0,0,0.06); border-radius:12px; padding:1rem 1.2rem; display:flex; align-items:flex-start; gap:0.75rem; }
+.inc-icon { width:32px; height:32px; border-radius:8px; background:var(--rose-light); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.inc-icon svg { width:16px; height:16px; stroke:var(--rose); fill:none; stroke-width:1.75; }
+.inc-text { font-size:0.8rem; color:var(--charcoal); line-height:1.5; }
+
+.session-cta-box { background:var(--rose-pale); border:1px solid rgba(201,82,106,0.2); border-radius:16px; padding:1.75rem; margin-top:2rem; }
+.session-cta-title { font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:0.5rem; }
+.session-cta-desc { font-size:0.83rem; color:var(--muted); line-height:1.65; }
+
+/* ── HABITS ── */
+.habits { background:var(--section-bg); }
+.habits-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:4rem; align-items:start; margin-top:2.5rem; }
+.habit-card { background:#fff; border:1px solid rgba(0,0,0,0.07); border-radius:20px; padding:2rem; }
+.habit-quote { font-family:'Playfair Display',serif; font-size:1.05rem; font-style:italic; line-height:1.55; margin-bottom:1.25rem; border-left:3px solid var(--rose); padding-left:1.25rem; }
+.habit-tip { display:flex; align-items:flex-start; gap:0.75rem; padding:0.7rem 0; border-top:1px solid rgba(0,0,0,0.04); }
+.tip-dot { width:6px; height:6px; border-radius:50%; background:var(--rose); margin-top:7px; flex-shrink:0; }
+.tip-text { font-size:0.84rem; color:var(--muted); line-height:1.65; }
+.movement-visual { background:var(--charcoal); border-radius:24px; padding:2.5rem; color:var(--cream); text-align:center; }
+.steps-num { font-family:'Playfair Display',serif; font-size:4rem; color:var(--blush); line-height:1; }
+.steps-sub { font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(248,244,238,0.5); margin:0.5rem 0 1.5rem; }
+.steps-desc { font-size:0.85rem; color:rgba(248,244,238,0.65); line-height:1.7; }
+.free-badge { display:inline-block; background:var(--rose); color:#fff; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.4rem 1rem; border-radius:20px; margin-top:1.5rem; font-weight:500; }
+
+/* ── TIMELINE ── */
+.timeline-section { background:var(--sand-light); border-top:1px solid rgba(212,184,150,0.3); }
+.timeline { display:flex; gap:0; margin-top:3rem; position:relative; }
+.timeline::before { content:""; position:absolute; top:28px; left:28px; right:28px; height:1px; background:linear-gradient(90deg, var(--rose) 0%, var(--lilac) 100%); }
+.timeline-step { flex:1; text-align:center; position:relative; padding-top:58px; }
+.timeline-dot { width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; position:absolute; top:0; left:50%; transform:translateX(-50%); border:3px solid var(--sand-light); }
+.dot-1 { background:var(--rose); color:#fff; }
+.dot-2 { background:var(--lilac); color:#fff; }
+.dot-3 { background:var(--green); color:#fff; }
+.dot-4 { background:var(--charcoal); color:var(--cream); }
+.step-time { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); }
+.step-title { font-family:'Playfair Display',serif; font-size:0.95rem; margin:0.35rem 0; }
+.step-desc { font-size:0.77rem; color:var(--muted); line-height:1.6; max-width:150px; margin:0 auto; }
+
+/* ── FOOTER CTA ── */
+.footer-cta { background:var(--rose-pale); border-top:1px solid rgba(201,82,106,0.15); text-align:center; padding:6rem 3rem; }
+.footer-cta .section-title { color:var(--charcoal); }
+.footer-cta .section-sub { max-width:480px; margin:0 auto 2.5rem; }
+.footer-name { font-family:'Playfair Display',serif; font-size:0.88rem; font-style:italic; margin-top:2.5rem; color:var(--muted); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.hero-left > * { animation:fadeUp 0.65s ease both; }
+.hero-left > :nth-child(1) { animation-delay:.1s; }
+.hero-left > :nth-child(2) { animation-delay:.22s; }
+.hero-left > :nth-child(3) { animation-delay:.36s; }
+.hero-left > :nth-child(4) { animation-delay:.5s; }
+.hero-photo-wrap { animation:fadeUp 0.75s .25s ease both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:960px) {
+  nav { padding:1rem 1.5rem; }
+  .nav-links { display:none; }
+  .hero { grid-template-columns:1fr; }
+  .hero-left { padding:3rem 1.5rem 2rem; }
+  .hero-right { display:none; }
+  section { padding:4rem 1.5rem; }
+  .about-grid, .tab-content.active, .habits-grid, .challenge-grid { grid-template-columns:1fr; gap:2.5rem; }
+  .pillars-grid, .products-grid { grid-template-columns:1fr; }
+  .products [style*="grid-template-columns:1.3fr"] { grid-template-columns:1fr !important; }
+  .includes-grid-big { grid-template-columns:1fr; }
+  .stats-row { gap:0.75rem; }
+  .timeline { flex-direction:column; gap:2rem; }
+  .timeline::before { display:none; }
+  .timeline-step { padding-top:0; padding-left:72px; text-align:left; }
+  .timeline-dot { top:0; left:0; transform:none; }
+  .step-desc { max-width:100%; margin:0; }
+  .tabs { overflow-x:auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Mora Sampaio</div>
+  <div class="nav-links">
+    <a href="#conoceme"><span class="es">Conoceme</span><span class="en">About</span></a>
+    <a href="#rutinas"><span class="es">Rutinas</span><span class="en">Programs</span></a>
+    <a href="#habitos"><span class="es">Hábitos</span><span class="en">Habits</span></a>
+    <a href="#empezar"><span class="es">Empezar</span><span class="en">Start</span></a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+  <!-- mobile lang only -->
+  <div class="lang-toggle" style="display:none" id="mobile-lang">
+    <button class="lang-btn active" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-left">
+    <span class="hero-tag"><span class="es">Mora Sampaio · Rutinas para mujeres</span><span class="en">Mora Sampaio · Training for women</span></span>
+    <h1 class="hero-title">
+      <span class="es">Tu cuerpo.<br>Tu ritmo.<br>Tu <em>transformación.</em></span>
+      <span class="en">Your body.<br>Your pace.<br>Your <em>transformation.</em></span>
+    </h1>
+    <p class="hero-sub es">Tres programas diseñados para ganar músculo, progresar en el entrenamiento y sentirte segura en el gym. Un espacio sin juicios, pensado para vos.</p>
+    <p class="hero-sub en">Three programs designed to build muscle, progress in your training and feel confident in the gym. A safe, judgment-free space built for you.</p>
+    <div class="hero-ctas">
+      <a href="#rutinas" class="btn-primary"><span class="es">Ver programas</span><span class="en">See programs</span></a>
+      <a href="#conoceme" class="btn-outline"><span class="es">Conoceme</span><span class="en">Meet Mora</span></a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-decor"></div>
+      <div class="photo-placeholder">
+        <!-- Replace src="" with your photo URL when ready -->
+        <div class="no-img">
+          <div class="ph-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <p class="es">Tu foto entrenando va acá</p>
+          <p class="en">Your training photo goes here</p>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <div class="badge-num">3 <span style="font-size:1rem" class="es">meses</span><span style="font-size:1rem" class="en">months</span></div>
+        <div class="badge-label es">para resultados reales y visibles</div>
+        <div class="badge-label en">to real, visible results</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONOCEME -->
+<section id="conoceme" class="about">
+  <div class="about-grid">
+    <div class="about-photo-wrap">
+      <div class="about-photo">
+        <!-- Replace with your photo -->
+        <div class="no-img">
+          <div class="ph-icon" style="width:64px;height:64px;border-radius:50%;background:rgba(201,82,106,0.15);display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 24 24" style="width:32px;height:32px;stroke:var(--rose);fill:none;stroke-width:1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <p class="es">Tu foto de perfil va acá</p>
+          <p class="en">Your profile photo goes here</p>
+        </div>
+      </div>
+      <div class="about-photo-badge es">Personal Trainer Certificada</div>
+      <div class="about-photo-badge en">Certified Personal Trainer</div>
+    </div>
+    <div class="about-right">
+      <div class="section-label es">Conoceme</div>
+      <div class="section-label en">About me</div>
+      <h2 class="section-title">
+        <span class="es">Entrené todo lo que te da <em>miedo.</em></span>
+        <span class="en">I've trained through everything <em>you fear.</em></span>
+      </h2>
+      <p class="section-sub es">Entreno hace 5 años. Los primeros dos los pasé sin un plan claro, copiando rutinas de internet, frustrada porque los resultados no llegaban. Entonces decidí formarme.</p>
+      <p class="section-sub en">I've been training for 5 years. The first two I spent with no clear plan, copying workouts from the internet, frustrated that results weren't coming. So I decided to get certified.</p>
+      <blockquote class="about-quote es">"Sé lo que se siente entrar a un gimnasio sin saber qué hacer. Este programa es lo que me hubiera gustado tener ese día."</blockquote>
+      <blockquote class="about-quote en">"I know what it feels like to walk into a gym with no idea what to do. This program is what I wish I had that day."</blockquote>
+      <div class="about-certs">
+        <div class="cert-pill"><span class="cert-dot"></span>Gualda Training International</div>
+        <div class="cert-pill"><span class="cert-dot"></span>Alianza Latinoamericana de Instructores de Fitness y Deporte</div>
+        <div class="cert-pill"><span class="cert-dot"></span>ISLA — Instituto Superior Latinoamericano</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="num">5</div>
+          <div class="lbl es">años de experiencia entrenando</div>
+          <div class="lbl en">years of training experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">3</div>
+          <div class="lbl es">programas completos listos para vos</div>
+          <div class="lbl en">complete programs ready for you</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">3 <span class="es">meses</span><span class="en">months</span></div>
+          <div class="lbl es">para ver resultados reales</div>
+          <div class="lbl en">to see real results</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARADIGMA -->
+<section class="paradigm">
+  <div class="section-label es">Lo que nadie te dice</div>
+  <div class="section-label en">What nobody tells you</div>
+  <h2 class="section-title">
+    <span class="es">No necesitás una rutina larga.<br>Necesitás una que <em>sostengas.</em></span>
+    <span class="en">You don't need a long routine.<br>You need one you'll <em>stick to.</em></span>
+  </h2>
+  <div class="pillars-grid">
+    <div class="pillar">
+      <div class="pillar-num">01</div>
+      <div class="pillar-title es">Técnica antes que peso</div>
+      <div class="pillar-title en">Technique before weight</div>
+      <div class="pillar-desc es">Cada ejercicio arranca aprendiendo el movimiento correcto. El peso viene después, cuando el cuerpo ya sabe qué tiene que hacer.</div>
+      <div class="pillar-desc en">Each exercise starts by learning the correct movement pattern. Weight comes after, when your body already knows what to do.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">02</div>
+      <div class="pillar-title es">30–45 minutos es suficiente</div>
+      <div class="pillar-title en">30–45 minutes is enough</div>
+      <div class="pillar-desc es">La ciencia dice que entre 12 y 20 series por grupo muscular por semana es el rango óptimo. No necesitás horas — necesitás hacerlo bien.</div>
+      <div class="pillar-desc en">Science says 12–20 sets per muscle group per week is optimal. You don't need hours — you need to do it right.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">03</div>
+      <div class="pillar-title es">La constancia gana siempre</div>
+      <div class="pillar-title en">Consistency always wins</div>
+      <div class="pillar-desc es">Un día sin gym no arruina tu progreso. Un mes sin movimiento, sí. Lo más importante es el entrenamiento que hacés seguido.</div>
+      <div class="pillar-desc en">One day off doesn't ruin your progress. A month without movement does. The best workout is the one you do consistently.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="rutinas" class="products">
+  <div class="section-label es">Los programas</div>
+  <div class="section-label en">The programs</div>
+  <h2 class="section-title">
+    <span class="es">Elegí tu <em>punto de partida.</em></span>
+    <span class="en">Choose your <em>starting point.</em></span>
+  </h2>
+  <p class="section-sub es">Tres programas diseñados para ganar músculo y progresar, sin importar desde dónde empezás. Todos efectivos, todos con mi respaldo. Un espacio seguro para entrenar.</p>
+  <p class="section-sub en">Three programs designed to build muscle and help you progress, no matter where you're starting from. All effective, all backed by me. A safe space to train.</p>
+
+  <div class="products-grid">
+    <!-- PRODUCTO 1 -->
+    <div class="product-card">
+      <div class="product-photo ph-bg-1">
+        <div class="no-img">
+          <div class="ph-icon" style="width:48px;height:48px;border-radius:50%;background:rgba(201,82,106,0.15);display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:var(--rose);fill:none;stroke-width:1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <span class="es">Foto de principiante / primera vez</span>
+          <span class="en">Beginner / first time photo</span>
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-level es">Principiante</div>
+        <div class="product-level en">Beginner</div>
+        <div class="product-name es">Tu primera vez</div>
+        <div class="product-name en">Your first time</div>
+        <div class="product-desc es">Para las que nunca entrenaron o van esporádicamente. Sin miedo, sin juicios. Con técnica y estructura desde el día uno.</div>
+        <div class="product-desc en">For those who have never trained or go sporadically. No fear, no judgment. With technique and structure from day one.</div>
+        <div class="product-includes">
+          <div class="product-includes-title es">Qué incluye</div>
+          <div class="product-includes-title en">What's included</div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">3 días de entrenamiento detallados</span><span class="include-text en">3 detailed training days</span></div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">Rutina de calentamiento incluida</span><span class="include-text en">Warm-up routine included</span></div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">Técnica y progresión explicada</span><span class="include-text en">Technique and progression explained</span></div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">Guía de cardio y movimiento diario</span><span class="include-text en">Cardio & daily movement guide</span></div>
+        </div>
+        <div class="product-price-row">
+          <div class="product-price"><sup>$</sup>19</div>
+        </div>
+        <div class="product-btn"><a href="#empezar" class="btn-primary" style="font-size:0.78rem;padding:0.75rem 1.5rem;">
+          <span class="es">Quiero este programa</span><span class="en">I want this program</span>
+        </a></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 2 -->
+    <div class="product-card featured">
+      <div class="product-photo ph-bg-2">
+        <div class="product-featured-badge es">Más popular</div>
+        <div class="product-featured-badge en">Most popular</div>
+        <div class="no-img">
+          <div class="ph-icon" style="width:48px;height:48px;border-radius:50%;background:rgba(155,142,196,0.2);display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:var(--lilac);fill:none;stroke-width:1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <span style="font-size:0.72rem;color:var(--lilac);text-align:center;line-height:1.5;max-width:140px;" class="es">Foto de entrenamiento intermedio</span>
+          <span style="font-size:0.72rem;color:var(--lilac);text-align:center;line-height:1.5;max-width:140px;" class="en">Intermediate training photo</span>
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-level" style="color:var(--lilac)">
+          <span class="es">Intermedio</span><span class="en">Intermediate</span>
+        </div>
+        <div class="product-name es">Estoy lista para más</div>
+        <div class="product-name en">I'm ready for more</div>
+        <div class="product-desc es">Para las que ya van 2–3 veces por semana pero quieren estructura, progresión real y resultados concretos.</div>
+        <div class="product-desc en">For those already going 2–3 times a week but want real structure, progression, and concrete results.</div>
+        <div class="product-includes">
+          <div class="product-includes-title es">Qué incluye</div>
+          <div class="product-includes-title en">What's included</div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">4 días de entrenamiento con volumen progresivo</span><span class="include-text en">4 training days with progressive volume</span></div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">Glúteos + tren superior + piernas + upper body</span><span class="include-text en">Glutes + upper body + legs + full upper</span></div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">Series, reps y cargas orientativas</span><span class="include-text en">Sets, reps, and load guidance</span></div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">Guía de progresión semana a semana</span><span class="include-text en">Week-by-week progression guide</span></div>
+        </div>
+        <div class="product-price-row">
+          <div class="product-price"><sup>$</sup>35</div>
+        </div>
+        <div class="product-btn"><a href="#empezar" class="btn-primary" style="font-size:0.78rem;padding:0.75rem 1.5rem;">
+          <span class="es">Quiero este programa</span><span class="en">I want this program</span>
+        </a></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTO 3 -->
+    <div class="product-card">
+      <div class="product-photo ph-bg-3">
+        <div class="no-img">
+          <div class="ph-icon" style="width:48px;height:48px;border-radius:50%;background:rgba(212,184,150,0.25);display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:var(--sand);fill:none;stroke-width:1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <span style="font-size:0.72rem;color:#7A5C3A;text-align:center;line-height:1.5;max-width:140px;" class="es">Tu foto del challenge / entrenamiento real</span>
+          <span style="font-size:0.72rem;color:#7A5C3A;text-align:center;line-height:1.5;max-width:140px;" class="en">Your challenge / real training photo</span>
+        </div>
+      </div>
+      <div class="product-body">
+        <div class="product-level" style="color:#7A5C3A">
+          <span class="es">Avanzado · Challenge 8 semanas</span>
+          <span class="en">Advanced · 8-Week Challenge</span>
+        </div>
+        <div class="product-name es">Entrena como yo</div>
+        <div class="product-name en">Train like me</div>
+        <div class="product-desc es">Mi rutina real. El Glute & Strength Challenge de 8 semanas con progresión de cargas, sesión 1 a 1 conmigo y recetas fit que uso en mi día a día.</div>
+        <div class="product-desc en">My real routine. The 8-Week Glute & Strength Challenge with load progression, a 1-on-1 session with me, and the fit recipes I use daily.</div>
+        <div class="product-includes">
+          <div class="product-includes-title es">Qué incluye · PLUS</div>
+          <div class="product-includes-title en">What's included · PLUS</div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">Programa completo 8 semanas con progresión Double Progression</span><span class="include-text en">Full 8-week program with Double Progression system</span></div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">Semana de descarga (deload) incluida</span><span class="include-text en">Deload week included</span></div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">Sesión 1 a 1 online conmigo (30 min)</span><span class="include-text en">1-on-1 online session with me (30 min)</span></div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">Acceso a grupo privado del challenge</span><span class="include-text en">Access to private challenge group</span></div>
+          <div class="include-item"><span class="include-dot"></span><span class="include-text es">🎁 Bonus: recetas fit de mi día a día</span><span class="include-text en">🎁 Bonus: my everyday fit recipes</span></div>
+        </div>
+        <div class="product-price-row">
+          <div class="product-price"><sup>$</sup>59</div>
+        </div>
+        <div class="product-btn"><a href="#empezar" class="btn-primary" style="font-size:0.78rem;padding:0.75rem 1.5rem;">
+          <span class="es">Quiero el challenge</span><span class="en">I want the challenge</span>
+        </a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUNDLE -->
+  <div style="margin-top:3rem;background:var(--charcoal);border-radius:20px;padding:2.5rem 3rem;display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;align-items:center;">
+    <div>
+      <div style="display:inline-block;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--rose);color:#fff;padding:0.3rem 0.9rem;border-radius:20px;margin-bottom:1rem;font-weight:500;">
+        <span class="es">Mejor precio</span><span class="en">Best value</span>
+      </div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--cream);line-height:1.25;margin-bottom:0.75rem;">
+        <span class="es">Bundle: programa + recetas fit</span>
+        <span class="en">Bundle: program + fit recipes</span>
+      </h3>
+      <p style="font-size:0.88rem;color:rgba(248,244,238,0.65);line-height:1.7;margin-bottom:1.25rem;">
+        <span class="es">Elegí cualquiera de los 3 programas y sumale la guía de 10 recetas fit altas en proteínas que uso en mi día a día. Recetas simples, ricas y pensadas para acompañar tu entrenamiento y ayudarte a alcanzar tu objetivo.</span>
+        <span class="en">Choose any of the 3 programs and add my guide of 10 high-protein fit recipes that I use daily. Simple, delicious recipes designed to complement your training and help you reach your goals.</span>
+      </p>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;">
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--blush);fill:none;stroke-width:2;flex-shrink:0;"><path d="M20 6L9 17l-5-5"/></svg>
+          <span style="font-size:0.82rem;color:rgba(248,244,238,0.75);" class="es">El programa que elijas (principiante, intermedio o challenge)</span>
+          <span style="font-size:0.82rem;color:rgba(248,244,238,0.75);" class="en">Your chosen program (beginner, intermediate or challenge)</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--blush);fill:none;stroke-width:2;flex-shrink:0;"><path d="M20 6L9 17l-5-5"/></svg>
+          <span style="font-size:0.82rem;color:rgba(248,244,238,0.75);" class="es">10 recetas fit altas en proteínas</span>
+          <span style="font-size:0.82rem;color:rgba(248,244,238,0.75);" class="en">10 high-protein fit recipes</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--blush);fill:none;stroke-width:2;flex-shrink:0;"><path d="M20 6L9 17l-5-5"/></svg>
+          <span style="font-size:0.82rem;color:rgba(248,244,238,0.75);" class="es">Desayunos, almuerzos, cenas y snacks que uso yo</span>
+          <span style="font-size:0.82rem;color:rgba(248,244,238,0.75);" class="en">Breakfasts, lunches, dinners & snacks I use daily</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:0.78rem;color:rgba(248,244,238,0.45);text-decoration:line-through;margin-bottom:0.25rem;">
+        <span class="es">Desde $29+ por separado</span>
+        <span class="en">From $29+ separately</span>
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:3.2rem;color:var(--cream);line-height:1;margin-bottom:0.25rem;">
+        <span style="font-size:1.4rem;color:var(--blush);vertical-align:super;">$</span>
+        <span class="es">desde 25</span>
+        <span class="en">from 25</span>
+      </div>
+      <div style="font-size:0.75rem;color:rgba(248,244,238,0.45);margin-bottom:1.5rem;">
+        <span class="es">programa + recetas</span>
+        <span class="en">program + recipes</span>
+      </div>
+      <a href="#empezar" class="btn-primary" style="font-size:0.82rem;padding:0.85rem 2rem;background:var(--cream);color:var(--charcoal);">
+        <span class="es">Quiero el bundle</span>
+        <span class="en">I want the bundle</span>
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<!-- SNEAK PEEK -->
+<section class="routine-section" id="preview">
+  <div class="section-label es">Un vistazo</div>
+  <div class="section-label en">A sneak peek</div>
+  <h2 class="section-title">
+    <span class="es">Lo que te esperá <em>adentro.</em></span>
+    <span class="en">What's waiting for you <em>inside.</em></span>
+  </h2>
+  <p class="section-sub es" style="margin-bottom:2.5rem;">Esto es solo una muestra. El programa completo — con cada ejercicio, serie, progresión y detalle — lo recibís al comprar.</p>
+  <p class="section-sub en" style="margin-bottom:2.5rem;">This is just a preview. The full program — every exercise, set, progression, and detail — is yours when you purchase.</p>
+
+  <div class="products-grid" style="margin-top:0;">
+
+    <!-- SNEAK 1 -->
+    <div class="product-card">
+      <div class="product-body" style="padding-top:2rem;">
+        <div class="product-level es">Principiante</div>
+        <div class="product-level en">Beginner</div>
+        <div class="product-name es" style="margin-bottom:1rem;">Tu primera vez</div>
+        <div class="product-name en" style="margin-bottom:1rem;">Your first time</div>
+        <div class="routine-meta" style="margin-bottom:1.25rem;">
+          <span class="meta-item"><span class="meta-dot"></span><span class="es">3–4 días/semana</span><span class="en">3–4 days/week</span></span>
+          <span class="meta-item"><span class="meta-dot"></span><span class="es">30–45 min por sesión</span><span class="en">30–45 min per session</span></span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.5rem;">
+          <div style="background:var(--rose-pale);border-radius:8px;padding:0.65rem 1rem;font-size:0.82rem;color:var(--rose-dark);">
+            <span class="es">Día 1 — Piernas y glúteos</span><span class="en">Day 1 — Legs & glutes</span>
+          </div>
+          <div style="background:var(--rose-pale);border-radius:8px;padding:0.65rem 1rem;font-size:0.82rem;color:var(--rose-dark);">
+            <span class="es">Día 2 — Tren superior</span><span class="en">Day 2 — Upper body</span>
+          </div>
+          <div style="background:var(--rose-pale);border-radius:8px;padding:0.65rem 1rem;font-size:0.82rem;color:var(--rose-dark);">
+            <span class="es">Día 3 — Full body</span><span class="en">Day 3 — Full body</span>
+          </div>
+          <div style="background:var(--cream);border-radius:8px;padding:0.65rem 1rem;font-size:0.8rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <span class="es">+ calentamiento, técnica y guía de cardio</span>
+            <span class="en">+ warm-up, technique & cardio guide</span>
+          </div>
+        </div>
+        <a href="#rutinas" class="btn-primary" style="font-size:0.78rem;padding:0.75rem 1.5rem;width:100%;text-align:center;display:block;">
+          <span class="es">Quiero este programa — $19</span><span class="en">I want this program — $19</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- SNEAK 2 -->
+    <div class="product-card featured">
+      <div class="product-body" style="padding-top:2rem;">
+        <div class="product-level" style="color:var(--lilac)">
+          <span class="es">Intermedio</span><span class="en">Intermediate</span>
+        </div>
+        <div class="product-name es" style="margin-bottom:1rem;">Estoy lista para más</div>
+        <div class="product-name en" style="margin-bottom:1rem;">I'm ready for more</div>
+        <div class="routine-meta" style="margin-bottom:1.25rem;">
+          <span class="meta-item"><span class="meta-dot"></span><span class="es">4–5 días/semana</span><span class="en">4–5 days/week</span></span>
+          <span class="meta-item"><span class="meta-dot"></span><span class="es">Más volumen y fuerza</span><span class="en">More volume & strength</span></span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.5rem;">
+          <div style="background:var(--lilac-light);border-radius:8px;padding:0.65rem 1rem;font-size:0.82rem;color:#4A3F7A;">
+            <span class="es">Día 1 — Glúteos (enfoque)</span><span class="en">Day 1 — Glutes (focus)</span>
+          </div>
+          <div style="background:var(--lilac-light);border-radius:8px;padding:0.65rem 1rem;font-size:0.82rem;color:#4A3F7A;">
+            <span class="es">Día 2 — Tren superior</span><span class="en">Day 2 — Upper body</span>
+          </div>
+          <div style="background:var(--lilac-light);border-radius:8px;padding:0.65rem 1rem;font-size:0.82rem;color:#4A3F7A;">
+            <span class="es">Día 3 — Piernas</span><span class="en">Day 3 — Legs</span>
+          </div>
+          <div style="background:var(--lilac-light);border-radius:8px;padding:0.65rem 1rem;font-size:0.82rem;color:#4A3F7A;">
+            <span class="es">Día 4 — Upper body</span><span class="en">Day 4 — Upper body</span>
+          </div>
+          <div style="background:var(--cream);border-radius:8px;padding:0.65rem 1rem;font-size:0.8rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <span class="es">+ guía de progresión semana a semana</span>
+            <span class="en">+ week-by-week progression guide</span>
+          </div>
+        </div>
+        <a href="#rutinas" class="btn-primary" style="font-size:0.78rem;padding:0.75rem 1.5rem;width:100%;text-align:center;display:block;">
+          <span class="es">Quiero este programa — $35</span><span class="en">I want this program — $35</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- SNEAK 3 -->
+    <div class="product-card">
+      <div class="product-body" style="padding-top:2rem;">
+        <div class="product-level" style="color:#7A5C3A">
+          <span class="es">Avanzado · 8 semanas</span><span class="en">Advanced · 8 weeks</span>
+        </div>
+        <div class="product-name es" style="margin-bottom:1rem;">Entrena como yo</div>
+        <div class="product-name en" style="margin-bottom:1rem;">Train like me</div>
+        <div class="routine-meta" style="margin-bottom:1.25rem;">
+          <span class="meta-item"><span class="meta-dot"></span><span class="es">5 días/semana</span><span class="en">5 days/week</span></span>
+          <span class="meta-item"><span class="meta-dot"></span><span class="es">Glute & Strength Challenge</span><span class="en">Glute & Strength Challenge</span></span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.5rem;">
+          <div style="background:var(--sand-light);border-radius:8px;padding:0.65rem 1rem;font-size:0.82rem;color:#7A5C3A;">
+            <span class="es">Lun & Vie — Glúteos</span><span class="en">Mon & Fri — Glutes</span>
+          </div>
+          <div style="background:var(--sand-light);border-radius:8px;padding:0.65rem 1rem;font-size:0.82rem;color:#7A5C3A;">
+            <span class="es">Mar & Jue — Espalda + hombros + core</span><span class="en">Tue & Thu — Back + shoulders + core</span>
+          </div>
+          <div style="background:var(--sand-light);border-radius:8px;padding:0.65rem 1rem;font-size:0.82rem;color:#7A5C3A;">
+            <span class="es">Mié — Piernas</span><span class="en">Wed — Legs</span>
+          </div>
+          <div style="background:var(--cream);border-radius:8px;padding:0.65rem 1rem;font-size:0.8rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <span class="es">+ sesión 1:1, progresión, deload y recetas</span>
+            <span class="en">+ 1:1 session, progression, deload & recipes</span>
+          </div>
+        </div>
+        <a href="#rutinas" class="btn-primary" style="font-size:0.78rem;padding:0.75rem 1.5rem;width:100%;text-align:center;display:block;">
+          <span class="es">Quiero el challenge — $59</span><span class="en">I want the challenge — $59</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HABITS -->
+<section id="habitos" class="habits">
+  <div class="section-label es">El extra que cambia todo</div>
+  <div class="section-label en">The extra that changes everything</div>
+  <h2 class="section-title">
+    <span class="es">Moverse es gratis.<br>Y es <em>lo más importante.</em></span>
+    <span class="en">Moving is free.<br>And it's <em>the most important thing.</em></span>
+  </h2>
+  <div class="habits-grid" style="grid-template-columns:1fr;max-width:680px;">
+    <div>
+      <div class="habit-card">
+        <div class="habit-quote es">"Al principio puede ser complicado. Pero ahora es mi parte favorita del día."</div>
+        <div class="habit-quote en">"At first it can feel hard. But now it's my favorite part of the day."</div>
+        
+        
+        <div class="habit-tip"><span class="tip-dot"></span><div class="tip-text es">Stack de hábitos: cuando el movimiento entra en tu rutina diaria, el entrenamiento deja de sentirse como un esfuerzo extra.</div><div class="tip-text en">Habit stacking: when movement becomes part of your daily routine, training stops feeling like extra effort.</div></div>
+        <div class="habit-tip"><span class="tip-dot"></span><div class="tip-text es">Si un día no podés ir al gym, no pasa nada. Pero moverse debería ser no negociable — aunque sean 20 minutos.</div><div class="tip-text en">If you can't make it to the gym one day, that's fine. But moving should be non-negotiable — even if it's just 20 minutes.</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="section-label es">La promesa concreta</div>
+  <div class="section-label en">The concrete promise</div>
+  <h2 class="section-title"><span class="es">Qué podés esperar, <em>y cuándo.</em></span><span class="en">What to expect, <em>and when.</em></span></h2>
+  <div class="timeline">
+    <div class="timeline-step"><div class="timeline-dot dot-1">1</div><div class="step-time es">Semana 1–2</div><div class="step-time en">Week 1–2</div><div class="step-title es">Aprendizaje</div><div class="step-title en">Learning</div><div class="step-desc es">Empezás a entender los movimientos. El gym ya no se siente tan ajeno.</div><div class="step-desc en">You start understanding the movements. The gym no longer feels foreign.</div></div>
+    <div class="timeline-step"><div class="timeline-dot dot-2">2</div><div class="step-time es">Semana 3–6</div><div class="step-time en">Week 3–6</div><div class="step-title es">Primeras adaptaciones</div><div class="step-title en">First adaptations</div><div class="step-desc es">Más fuerte, más coordinada. El sistema nervioso ya aprendió los patrones.</div><div class="step-desc en">Stronger, more coordinated. Your nervous system has learned the patterns.</div></div>
+    <div class="timeline-step"><div class="timeline-dot dot-3">3</div><div class="step-time es">Mes 2</div><div class="step-time en">Month 2</div><div class="step-title es">La rutina se instala</div><div class="step-title en">The routine is set</div><div class="step-desc es">Ir al gym ya no es un esfuerzo. Empieza a ser parte de quién sos.</div><div class="step-desc en">Going to the gym is no longer effort. It's starting to be part of who you are.</div></div>
+    <div class="timeline-step"><div class="timeline-dot dot-4">4</div><div class="step-time es">Mes 3</div><div class="step-time en">Month 3</div><div class="step-title es">Resultados visibles</div><div class="step-title en">Visible results</div><div class="step-desc es">Cambios reales en tonificación, composición y energía.</div><div class="step-desc en">Real changes in tone, body composition, and energy.</div></div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta" id="empezar">
+  <div class="section-label es">El primer paso</div>
+  <div class="section-label en">The first step</div>
+  <h2 class="section-title"><span class="es">Si no te comprometés con<br>vos misma, nadie más<br>lo va a hacer. Pero podés<br>empezar <em>hoy.</em></span><span class="en">If you don't commit to<br>yourself, nobody else<br>will. But you can start<br><em>today.</em></span></h2>
+  <p class="section-sub es">No necesitás estar lista. No necesitás tener todo claro. Solo necesitás aparecer. Lo demás lo hacemos juntas.</p>
+  <p class="section-sub en">You don't need to be ready. You don't need to have it all figured out. You just need to show up. We'll do the rest together.</p>
+  <a href="#rutinas" class="btn-primary" style="font-size:0.92rem;padding:1rem 2.5rem;letter-spacing:0.08em;">
+    <span class="es">Quiero empezar hoy</span>
+    <span class="en">I want to start today</span>
+  </a>
+</section>
+
+<script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(b => { if(b.textContent.trim().toLowerCase()===lang) b.classList.add('active'); });
+}
+
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => { t.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// show mobile lang toggle on small screens
+function checkMobile() {
+  const mob = document.getElementById('mobile-lang');
+  if(window.innerWidth <= 960) mob.style.display='flex';
+  else mob.style.display='none';
+}
+checkMobile();
+window.addEventListener('resize', checkMobile);
+</script>
+</body>
+</html>
