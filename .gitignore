@@ -43,3 +43,5 @@ Thumbs.db
 
 # Parser output (generated, can regenerate)
 legacy/parsed-chapters.json
+
+.vercel

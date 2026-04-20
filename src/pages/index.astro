@@ -1,20 +1,29 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-// TODO(sanity): replace this stub with fetchBook() once content is seeded.
-// import { sanity } from '@lib/sanity';
-// import { BOOK_QUERY } from '@lib/queries';
-// const book = await sanity.fetch(BOOK_QUERY);
+import Hero from '@components/sections/Hero.astro';
+import { sanity } from '@lib/sanity';
+import { LANDING_QUERY } from '@lib/queries';
+import type { LandingPage } from '@/types/sanity';
+
+const landing = await sanity.fetch<LandingPage | null>(LANDING_QUERY);
 ---
 
 <BaseLayout
-  title="Mora — próximamente"
-  description="Mora, el ebook. Migrando de HTML estático a Astro + Sanity."
+  title="Mora"
+  description="Rutinas para ganar músculo, progresar y sentirte segura en el gym."
 >
-  <section class="py-20 text-center">
-    <h1 class="text-5xl font-bold tracking-tight">Mora</h1>
-    <p class="mt-4 text-lg text-[color:var(--color-muted)]">
-      El ebook se está migrando a una nueva casa.
-    </p>
-    <p class="mt-2 text-sm text-[color:var(--color-muted)]">Próximamente.</p>
-  </section>
+  {landing?.hero ? (
+    <Hero data={landing.hero} />
+  ) : (
+    <section class="py-20 text-center">
+      <h1 class="text-5xl font-bold tracking-tight">Mora</h1>
+      <p class="mt-4 text-lg text-[color:var(--color-muted)]">
+        Todavía no hay contenido en Sanity.
+      </p>
+      <p class="mt-2 text-sm text-[color:var(--color-muted)]">
+        Abrí <a class="underline" href="http://localhost:3333">el Studio</a>, creá el Landing page y volvé a cargar.
+      </p>
+    </section>
+  )}
+  <!-- TODO: render <About />, <Paradigm />, <Products />, <Preview />, <Habits />, <Timeline />, <Cta /> cuando el contenido exista. -->
 </BaseLayout>

@@ -10,6 +10,7 @@ export default defineConfig({
   output: 'static',
   integrations: [sitemap(), mdx()],
   vite: {
+    // @ts-expect-error - @tailwindcss/vite exposes rolldown plugin types; astro's bundled vite uses rollup types. Harmless at runtime.
     plugins: [tailwindcss()],
   },
 });

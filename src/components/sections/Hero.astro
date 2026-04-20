@@ -1,0 +1,53 @@
+---
+import type { HeroSection, Locale } from '@/types/sanity';
+import { t } from '@lib/i18n';
+
+interface Props {
+  data: HeroSection;
+  locale?: Locale;
+}
+
+const { data, locale = 'es' } = Astro.props;
+
+const title = t(data.title, locale);
+const emphasis = t(data.titleEmphasis, locale);
+---
+
+<section class="py-20 md:py-28">
+  {data.tag && (
+    <p class="text-sm uppercase tracking-widest text-[color:var(--color-muted)]">
+      {t(data.tag, locale)}
+    </p>
+  )}
+
+  {(title || emphasis) && (
+    <h1 class="mt-4 text-5xl md:text-6xl font-bold tracking-tight whitespace-pre-line">
+      {title}
+      {emphasis && <> <em class="text-[color:var(--color-accent)]">{emphasis}</em></>}
+    </h1>
+  )}
+
+  {data.subtitle && (
+    <p class="mt-6 max-w-xl text-lg text-[color:var(--color-muted)]">
+      {t(data.subtitle, locale)}
+    </p>
+  )}
+
+  {data.ctas && data.ctas.length > 0 && (
+    <div class="mt-8 flex flex-wrap gap-3">
+      {data.ctas.map((cta) => (
+        <a
+          href={cta.href}
+          class:list={[
+            'inline-flex items-center rounded-full px-6 py-3 text-sm font-medium transition',
+            cta.variant === 'outline'
+              ? 'border border-[color:var(--color-accent)] text-[color:var(--color-accent)] hover:bg-[color:var(--color-accent)]/10'
+              : 'bg-[color:var(--color-accent)] text-white hover:opacity-90',
+          ]}
+        >
+          {t(cta.label, locale)}
+        </a>
+      ))}
+    </div>
+  )}
+</section>

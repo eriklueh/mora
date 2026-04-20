@@ -4,19 +4,17 @@ export default defineType({
   name: 'siteSettings',
   title: 'Site settings',
   type: 'document',
-  // Singleton: hide the "new document" action in the structure.
   fields: [
     defineField({
       name: 'title',
       title: 'Site title',
-      type: 'string',
+      type: 'localeString',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'description',
-      title: 'Site description',
-      type: 'text',
-      rows: 2,
+      title: 'Default meta description',
+      type: 'localeText',
     }),
     defineField({
       name: 'ogImage',
@@ -31,11 +29,12 @@ export default defineType({
       of: [
         {
           type: 'object',
+          name: 'navItem',
           fields: [
             defineField({
               name: 'label',
               title: 'Label',
-              type: 'string',
+              type: 'localeString',
               validation: (Rule) => Rule.required(),
             }),
             defineField({
@@ -46,7 +45,8 @@ export default defineType({
             }),
           ],
           preview: {
-            select: { title: 'label', subtitle: 'href' },
+            select: { label: 'label.es', href: 'href' },
+            prepare: ({ label, href }) => ({ title: label, subtitle: href }),
           },
         },
       ],

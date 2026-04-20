@@ -3,9 +3,6 @@ import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './schemas';
 
-// Project ID is read from sanity.cli.ts at build/dev time via the CLI.
-// For the runtime config we accept env overrides so CI/preview can target
-// different datasets without editing source.
 const projectId =
   process.env.SANITY_STUDIO_PROJECT_ID ??
   process.env.SANITY_PROJECT_ID ??
@@ -15,6 +12,15 @@ const dataset =
   process.env.SANITY_STUDIO_DATASET ??
   process.env.SANITY_DATASET ??
   'production';
+
+// Document types that are singletons — shown as direct items in the sidebar
+// with a fixed document ID, and hidden from the regular "create new" lists.
+const SINGLETONS = [
+  { id: 'landingPage', type: 'landingPage', title: 'Landing page' },
+  { id: 'siteSettings', type: 'siteSettings', title: 'Site settings' },
+] as const;
+
+const SINGLETON_TYPES = new Set<string>(SINGLETONS.map((s) => s.type));
 
 export default defineConfig({
   name: 'default',
@@ -27,22 +33,27 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
-            S.listItem()
-              .title('Site settings')
-              .child(
-                S.document()
-                  .schemaType('siteSettings')
-                  .documentId('siteSettings'),
-              ),
-            S.divider(),
-            S.documentTypeListItem('book').title('Books'),
-            S.documentTypeListItem('chapter').title('Chapters'),
-            S.documentTypeListItem('author').title('Authors'),
+            ...SINGLETONS.map((s) =>
+              S.listItem()
+                .title(s.title)
+                .id(s.id)
+                .child(S.document().schemaType(s.type).documentId(s.id)),
+            ),
           ]),
     }),
     visionTool(),
   ],
   schema: {
     types: schemaTypes,
+    // Hide singletons from the "new document" list.
+    templates: (templates) =>
+      templates.filter(({ schemaType }) => !SINGLETON_TYPES.has(schemaType)),
+  },
+  document: {
+    // Disable the delete action for singletons so editors can't nuke them by accident.
+    actions: (input, context) =>
+      SINGLETON_TYPES.has(context.schemaType)
+        ? input.filter(({ action }) => action !== 'delete' && action !== 'duplicate' && action !== 'unpublish')
+        : input,
   },
 });
