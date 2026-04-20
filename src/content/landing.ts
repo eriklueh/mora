@@ -1,9 +1,9 @@
 import type { LandingContent } from '@/types/landing';
 
 // Single source of truth for the WhatsApp number used by every CTA that
-// purchases or contacts. Replace with the real number in international format
-// (country code + area code + number, digits only, no +).
-const WHATSAPP_PHONE = '549XXXXXXXXXX';
+// purchases or contacts. International format, digits only, no +.
+// 54 (Argentina) + 9 (mobile) + 11 (Buenos Aires area) + 54930725.
+const WHATSAPP_PHONE = '5491154930725';
 
 function wa(message: string): string {
   const phone = WHATSAPP_PHONE.replace(/\D/g, '');
