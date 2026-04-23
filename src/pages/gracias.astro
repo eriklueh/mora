@@ -1,8 +1,48 @@
 ---
-export const prerender = true;
+// SSR: we need the query string at request time to pull the Checkout Session
+// and show the right download links to the buyer.
+export const prerender = false;
 
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { landing } from '@/content/landing';
+import { stripe } from '@/lib/stripe';
+
+interface PurchasedItem {
+  name: string;
+  downloadUrl: string | null;
+}
+
+const sessionId = Astro.url.searchParams.get('session_id');
+let items: PurchasedItem[] = [];
+let customerEmail: string | null = null;
+let paid = false;
+let fetchError: string | null = null;
+
+if (sessionId) {
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {
+      expand: ['line_items.data.price.product'],
+    });
+    paid = session.payment_status === 'paid';
+    customerEmail = session.customer_details?.email ?? null;
+
+    if (paid && session.line_items) {
+      items = session.line_items.data.map((li) => {
+        const price = li.price;
+        const product = price && typeof price.product !== 'string' && !price.product.deleted
+          ? price.product
+          : null;
+        return {
+          name: product?.name ?? li.description ?? 'Programa',
+          downloadUrl: product?.metadata?.download_url ?? null,
+        };
+      });
+    }
+  } catch (err) {
+    fetchError = err instanceof Error ? err.message : 'Unknown error';
+    console.error('[gracias] failed to retrieve session', err);
+  }
+}
 
 const description = {
   es: '¡Gracias por tu compra! Tu programa viene en camino.',
@@ -10,6 +50,10 @@ const description = {
 };
 
 const waHref = `https://wa.me/${landing.contact.whatsapp.replace(/\D/g, '')}`;
+
+// Any item without a download_url is a deferred fulfilment (e.g. Mora reaches
+// out separately); we show a contextual message instead of a broken link.
+const hasDownloads = items.some((i) => i.downloadUrl);
 ---
 
 <BaseLayout title="¡Gracias! — Mora Sampaio" description={description}>
@@ -29,16 +73,67 @@ const waHref = `https://wa.me/${landing.contact.whatsapp.replace(/\D/g, '')}`;
       <span class="en">Thanks for <em>training with me.</em></span>
     </h1>
 
+    {paid && items.length > 0 && (
+      <div class="thanks-downloads">
+        <h2 class="downloads-title">
+          <span class="es">Tus programas</span><span class="en">Your programs</span>
+        </h2>
+        <ul class="downloads-list">
+          {items.map((item) => (
+            <li class="download-item">
+              <div class="download-meta">
+                <div class="download-name">{item.name}</div>
+                {customerEmail && (
+                  <div class="download-email">
+                    <span class="es">Copia por email: </span><span class="en">Email copy: </span>
+                    {customerEmail}
+                  </div>
+                )}
+              </div>
+              {item.downloadUrl ? (
+                <a class="btn-primary download-btn" href={item.downloadUrl} download>
+                  <span class="es">Descargar PDF</span><span class="en">Download PDF</span>
+                </a>
+              ) : (
+                <span class="download-pending">
+                  <span class="es">Mora te lo envía en las próximas horas</span>
+                  <span class="en">Mora will send it in the next few hours</span>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {sessionId && !paid && !fetchError && (
+      <p class="thanks-notice">
+        <span class="es">Tu pago todavía no se confirmó. Si ya completaste el checkout, refrescá en unos segundos.</span>
+        <span class="en">Your payment is not confirmed yet. If you just completed checkout, refresh in a few seconds.</span>
+      </p>
+    )}
+
+    {fetchError && (
+      <p class="thanks-notice error">
+        <span class="es">No pudimos verificar tu compra automáticamente. Escribime por WhatsApp y lo resolvemos.</span>
+        <span class="en">We couldn&rsquo;t verify your purchase automatically. Message me on WhatsApp and we&rsquo;ll sort it out.</span>
+      </p>
+    )}
+
     <div class="thanks-cards">
       <div class="thanks-card">
         <div class="thanks-step">01</div>
         <h2>
-          <span class="es">Revisá tu email</span>
-          <span class="en">Check your email</span>
+          <span class="es">{hasDownloads ? 'Ya podés empezar' : 'Revisá tu email'}</span>
+          <span class="en">{hasDownloads ? 'You can start now' : 'Check your email'}</span>
         </h2>
         <p>
-          <span class="es">Tu programa en PDF llega en los próximos minutos al mail de la compra. Si no lo ves, revisá spam o promociones.</span>
-          <span class="en">Your program PDF arrives in the next few minutes to the email you used at checkout. If it&rsquo;s not there, check spam or promotions.</span>
+          <span class="es">{hasDownloads
+            ? 'Descargate el PDF de arriba y también te dejo una copia en tu email.'
+            : 'Tu programa en PDF llega en los próximos minutos al mail de la compra. Si no lo ves, revisá spam o promociones.'}</span>
+          <span class="en">{hasDownloads
+            ? 'Download the PDF above — a copy is also on its way to your email.'
+            : 'Your program PDF arrives in the next few minutes to the email you used at checkout. If it\u2019s not there, check spam or promotions.'}</span>
         </p>
       </div>
 
@@ -122,11 +217,83 @@ const waHref = `https://wa.me/${landing.contact.whatsapp.replace(/\D/g, '')}`;
     font-size: clamp(2rem, 3.6vw, 3rem);
     line-height: 1.15;
     letter-spacing: -0.015em;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
   }
   .thanks-title em {
     color: var(--rose);
     font-style: italic;
+  }
+
+  .thanks-downloads {
+    background: #fff;
+    border: 1px solid rgba(201, 82, 106, 0.18);
+    border-radius: 18px;
+    padding: 1.75rem;
+    margin-bottom: 2.5rem;
+    text-align: left;
+    box-shadow: var(--shadow-md);
+  }
+  .downloads-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--charcoal);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(201, 82, 106, 0.12);
+  }
+  .downloads-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .download-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .download-meta {
+    flex: 1;
+    min-width: 200px;
+  }
+  .download-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--charcoal);
+    margin-bottom: 0.25rem;
+  }
+  .download-email {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .download-btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+  .download-pending {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .thanks-notice {
+    background: var(--rose-pale);
+    border: 1px solid rgba(201, 82, 106, 0.2);
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.88rem;
+    color: var(--charcoal);
+    line-height: 1.6;
+  }
+  .thanks-notice.error {
+    background: #fdf0f1;
+    border-color: #e8b4bc;
   }
 
   .thanks-cards {
@@ -211,6 +378,14 @@ const waHref = `https://wa.me/${landing.contact.whatsapp.replace(/\D/g, '')}`;
     }
     .thanks-cards {
       grid-template-columns: 1fr;
+    }
+    .download-item {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .download-btn {
+      width: 100%;
+      text-align: center;
     }
   }
 </style>

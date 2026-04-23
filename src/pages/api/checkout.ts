@@ -6,8 +6,7 @@ export const prerender = false;
 // Products that include a 1:1 session: collect a phone number so Mora can
 // follow up over WhatsApp after checkout.
 const REQUIRES_PHONE = new Set<string>([
-  // Fill in with the Challenge price_id (and Bundle if it bundles the 1:1)
-  // after running `npm run seed:stripe`.
+  'price_1TPEewAf0WNWKogWBYkhjScy', // entrena-como-yo (Challenge — includes 1:1 session)
 ]);
 
 export const POST: APIRoute = async ({ request, redirect, url }) => {

@@ -159,7 +159,7 @@ export const landing: LandingContent = {
     cards: [
       {
         slug: 'tu-primera-vez',
-        stripePriceId: 'price_PLACEHOLDER_principiante',
+        stripePriceId: 'price_1TPEeuAf0WNWKogWyd4CSx53',
         level: { es: 'Principiante', en: 'Beginner' },
         name: { es: 'Tu primera vez', en: 'Your first time' },
         desc: {
@@ -194,7 +194,7 @@ export const landing: LandingContent = {
       },
       {
         slug: 'estoy-lista-para-mas',
-        stripePriceId: 'price_PLACEHOLDER_intermedio',
+        stripePriceId: 'price_1TPEevAf0WNWKogW2LleQQ31',
         level: { es: 'Intermedio', en: 'Intermediate' },
         name: { es: 'Estoy lista para más', en: "I'm ready for more" },
         desc: {
@@ -232,7 +232,7 @@ export const landing: LandingContent = {
       },
       {
         slug: 'entrena-como-yo',
-        stripePriceId: 'price_PLACEHOLDER_challenge',
+        stripePriceId: 'price_1TPEewAf0WNWKogWBYkhjScy',
         level: {
           es: 'Avanzado · Challenge 8 semanas',
           en: 'Advanced · 8-Week Challenge',
@@ -275,7 +275,7 @@ export const landing: LandingContent = {
       },
     ],
     bundle: {
-      stripePriceId: 'price_PLACEHOLDER_bundle',
+      stripePriceId: 'price_1TPEeyAf0WNWKogWxRGMXPV6',
       badge: { es: 'Mejor precio', en: 'Best value' },
       title: {
         es: 'Bundle: programa + recetas fit',
@@ -316,7 +316,7 @@ export const landing: LandingContent = {
     },
     cards: [
       {
-        stripePriceId: 'price_PLACEHOLDER_principiante',
+        stripePriceId: 'price_1TPEeuAf0WNWKogWyd4CSx53',
         level: { es: 'Principiante', en: 'Beginner' },
         name: { es: 'Tu primera vez', en: 'Your first time' },
         meta: [
@@ -339,7 +339,7 @@ export const landing: LandingContent = {
         variant: 'rose',
       },
       {
-        stripePriceId: 'price_PLACEHOLDER_intermedio',
+        stripePriceId: 'price_1TPEevAf0WNWKogW2LleQQ31',
         level: { es: 'Intermedio', en: 'Intermediate' },
         name: { es: 'Estoy lista para más', en: "I'm ready for more" },
         meta: [
@@ -365,7 +365,7 @@ export const landing: LandingContent = {
         levelColor: 'var(--lilac)',
       },
       {
-        stripePriceId: 'price_PLACEHOLDER_challenge',
+        stripePriceId: 'price_1TPEewAf0WNWKogWBYkhjScy',
         level: {
           es: 'Avanzado · 8 semanas',
           en: 'Advanced · 8 weeks',
