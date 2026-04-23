@@ -1,6 +1,7 @@
 ---
 import type { Preview } from '@/types/landing';
 import SectionHeading from '@components/SectionHeading.astro';
+import BuyButton from '@components/BuyButton.astro';
 
 interface Props {
   data: Preview;
@@ -51,14 +52,12 @@ const { data } = Astro.props;
             </div>
           </div>
 
-          <a
-            href={card.cta.href}
-            class="btn-primary preview-cta"
-            target={card.cta.href.startsWith('http') ? '_blank' : undefined}
-            rel={card.cta.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-          >
-            <span class="es">{card.cta.label.es}</span><span class="en">{card.cta.label.en}</span>
-          </a>
+          <BuyButton
+            priceId={card.stripePriceId}
+            label={card.ctaLabel}
+            className="btn-primary preview-cta"
+            fullWidth
+          />
         </div>
       </article>
     ))}

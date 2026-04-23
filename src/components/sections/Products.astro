@@ -1,6 +1,7 @@
 ---
 import type { Products } from '@/types/landing';
 import SectionHeading from '@components/SectionHeading.astro';
+import BuyButton from '@components/BuyButton.astro';
 
 interface Props {
   data: Products;
@@ -83,14 +84,7 @@ const photoLabelColor = {
             <div class="product-price"><sup>$</sup>{card.price}</div>
           </div>
           <div class="product-btn">
-            <a
-              href={card.ctaHref}
-              class="btn-primary"
-              target={card.ctaHref.startsWith('http') ? '_blank' : undefined}
-              rel={card.ctaHref.startsWith('http') ? 'noopener noreferrer' : undefined}
-            >
-              <span class="es">{card.ctaLabel.es}</span><span class="en">{card.ctaLabel.en}</span>
-            </a>
+            <BuyButton priceId={card.stripePriceId} label={card.ctaLabel} fullWidth />
           </div>
         </div>
       </article>
@@ -129,14 +123,11 @@ const photoLabelColor = {
       <div class="bundle-price-suffix">
         <span class="es">{data.bundle.priceSuffix.es}</span><span class="en">{data.bundle.priceSuffix.en}</span>
       </div>
-      <a
-        href={data.bundle.cta.href}
-        class="btn-primary bundle-cta"
-        target={data.bundle.cta.href.startsWith('http') ? '_blank' : undefined}
-        rel={data.bundle.cta.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-      >
-        <span class="es">{data.bundle.cta.label.es}</span><span class="en">{data.bundle.cta.label.en}</span>
-      </a>
+      <BuyButton
+        priceId={data.bundle.stripePriceId}
+        label={data.bundle.ctaLabel}
+        className="btn-primary bundle-cta"
+      />
     </div>
   </div>
 </section>

@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "seed:stripe": "node scripts/seed-stripe.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
@@ -18,5 +19,9 @@
     "astro": "^6.1.8",
     "tailwindcss": "^4.2.2",
     "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^10.0.5",
+    "stripe": "^22.0.2"
   }
 }

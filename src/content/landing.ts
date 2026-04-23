@@ -158,6 +158,8 @@ export const landing: LandingContent = {
     },
     cards: [
       {
+        slug: 'tu-primera-vez',
+        stripePriceId: 'price_PLACEHOLDER_principiante',
         level: { es: 'Principiante', en: 'Beginner' },
         name: { es: 'Tu primera vez', en: 'Your first time' },
         desc: {
@@ -189,11 +191,10 @@ export const landing: LandingContent = {
           en: 'Beginner / first time photo',
         },
         ctaLabel: { es: 'Quiero este programa', en: 'I want this program' },
-        ctaHref: wa(
-          '¡Hola Mora! Quiero empezar con "Tu primera vez" (Principiante · USD 19). ¿Me contás cómo sigue?',
-        ),
       },
       {
+        slug: 'estoy-lista-para-mas',
+        stripePriceId: 'price_PLACEHOLDER_intermedio',
         level: { es: 'Intermedio', en: 'Intermediate' },
         name: { es: 'Estoy lista para más', en: "I'm ready for more" },
         desc: {
@@ -225,14 +226,13 @@ export const landing: LandingContent = {
           en: 'Intermediate training photo',
         },
         ctaLabel: { es: 'Quiero este programa', en: 'I want this program' },
-        ctaHref: wa(
-          '¡Hola Mora! Me interesa "Estoy lista para más" (Intermedio · USD 35). ¿Cómo lo consigo?',
-        ),
         featured: true,
         featuredLabel: { es: 'Más popular', en: 'Most popular' },
         levelColor: 'var(--lilac)',
       },
       {
+        slug: 'entrena-como-yo',
+        stripePriceId: 'price_PLACEHOLDER_challenge',
         level: {
           es: 'Avanzado · Challenge 8 semanas',
           en: 'Advanced · 8-Week Challenge',
@@ -271,13 +271,11 @@ export const landing: LandingContent = {
           en: 'Your challenge / real training photo',
         },
         ctaLabel: { es: 'Quiero el challenge', en: 'I want the challenge' },
-        ctaHref: wa(
-          '¡Hola Mora! Me anoto al "Entrena como yo" — Glute & Strength Challenge 8 semanas (USD 59). ¿Cuál es el siguiente paso?',
-        ),
         levelColor: '#7A5C3A',
       },
     ],
     bundle: {
+      stripePriceId: 'price_PLACEHOLDER_bundle',
       badge: { es: 'Mejor precio', en: 'Best value' },
       title: {
         es: 'Bundle: programa + recetas fit',
@@ -304,13 +302,7 @@ export const landing: LandingContent = {
       priceStrike: { es: 'Desde $29+ por separado', en: 'From $29+ separately' },
       priceLabel: { es: 'desde 25', en: 'from 25' },
       priceSuffix: { es: 'programa + recetas', en: 'program + recipes' },
-      cta: {
-        label: { es: 'Quiero el bundle', en: 'I want the bundle' },
-        href: wa(
-          '¡Hola Mora! Quiero el bundle (programa + 10 recetas fit). ¿Cómo lo armamos?',
-        ),
-        variant: 'primary',
-      },
+      ctaLabel: { es: 'Quiero el bundle', en: 'I want the bundle' },
     },
   },
 
@@ -324,6 +316,7 @@ export const landing: LandingContent = {
     },
     cards: [
       {
+        stripePriceId: 'price_PLACEHOLDER_principiante',
         level: { es: 'Principiante', en: 'Beginner' },
         name: { es: 'Tu primera vez', en: 'Your first time' },
         meta: [
@@ -339,19 +332,14 @@ export const landing: LandingContent = {
           es: '+ calentamiento, técnica y guía de cardio',
           en: '+ warm-up, technique & cardio guide',
         },
-        cta: {
-          label: {
-            es: 'Quiero este programa — $19',
-            en: 'I want this program — $19',
-          },
-          href: wa(
-            '¡Hola Mora! Quiero empezar con "Tu primera vez" (Principiante · USD 19). ¿Me contás cómo sigue?',
-          ),
-          variant: 'primary',
+        ctaLabel: {
+          es: 'Quiero este programa — $19',
+          en: 'I want this program — $19',
         },
         variant: 'rose',
       },
       {
+        stripePriceId: 'price_PLACEHOLDER_intermedio',
         level: { es: 'Intermedio', en: 'Intermediate' },
         name: { es: 'Estoy lista para más', en: "I'm ready for more" },
         meta: [
@@ -368,21 +356,16 @@ export const landing: LandingContent = {
           es: '+ guía de progresión semana a semana',
           en: '+ week-by-week progression guide',
         },
-        cta: {
-          label: {
-            es: 'Quiero este programa — $35',
-            en: 'I want this program — $35',
-          },
-          href: wa(
-            '¡Hola Mora! Me interesa "Estoy lista para más" (Intermedio · USD 35). ¿Cómo lo consigo?',
-          ),
-          variant: 'primary',
+        ctaLabel: {
+          es: 'Quiero este programa — $35',
+          en: 'I want this program — $35',
         },
         variant: 'lilac',
         featured: true,
         levelColor: 'var(--lilac)',
       },
       {
+        stripePriceId: 'price_PLACEHOLDER_challenge',
         level: {
           es: 'Avanzado · 8 semanas',
           en: 'Advanced · 8 weeks',
@@ -407,13 +390,7 @@ export const landing: LandingContent = {
           es: '+ sesión 1:1, progresión, deload y recetas',
           en: '+ 1:1 session, progression, deload & recipes',
         },
-        cta: {
-          label: { es: 'Quiero el challenge — $59', en: 'I want the challenge — $59' },
-          href: wa(
-            '¡Hola Mora! Me anoto al "Entrena como yo" — Glute & Strength Challenge 8 semanas (USD 59). ¿Cuál es el siguiente paso?',
-          ),
-          variant: 'primary',
-        },
+        ctaLabel: { es: 'Quiero el challenge — $59', en: 'I want the challenge — $59' },
         variant: 'sand',
         levelColor: '#7A5C3A',
       },

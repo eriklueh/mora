@@ -32,6 +32,8 @@ export interface Include {
 }
 
 export interface ProductCard {
+  slug: string;
+  stripePriceId: string;
   level: LocaleString;
   name: LocaleString;
   desc: LocaleString;
@@ -40,13 +42,13 @@ export interface ProductCard {
   photoVariant: 'rose' | 'lilac' | 'sand';
   photoLabel: LocaleString;
   ctaLabel: LocaleString;
-  ctaHref: string;
   featured?: boolean;
   featuredLabel?: LocaleString;
   levelColor?: string;
 }
 
 export interface Bundle {
+  stripePriceId: string;
   badge: LocaleString;
   title: LocaleString;
   desc: LocaleString;
@@ -54,7 +56,7 @@ export interface Bundle {
   priceStrike: LocaleString;
   priceLabel: LocaleString;
   priceSuffix: LocaleString;
-  cta: Cta;
+  ctaLabel: LocaleString;
 }
 
 export interface PreviewDay {
@@ -62,12 +64,13 @@ export interface PreviewDay {
 }
 
 export interface PreviewCard {
+  stripePriceId: string;
   level: LocaleString;
   name: LocaleString;
   meta: LocaleString[];
   days: LocaleString[];
   extra: LocaleString;
-  cta: Cta;
+  ctaLabel: LocaleString;
   variant: 'rose' | 'lilac' | 'sand';
   featured?: boolean;
   levelColor?: string;

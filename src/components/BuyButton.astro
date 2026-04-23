@@ -1,0 +1,52 @@
+---
+import type { LocaleString } from '@/types/landing';
+
+interface Props {
+  priceId: string;
+  label: LocaleString;
+  className?: string;
+  style?: string;
+  fullWidth?: boolean;
+}
+
+const { priceId, label, className = 'btn-primary', style, fullWidth } = Astro.props;
+
+// Show a visible warning state if the seed script hasn't been run yet.
+const pending = priceId.startsWith('price_PLACEHOLDER');
+---
+
+<form
+  method="POST"
+  action="/api/checkout"
+  class:list={['buy-form', { 'is-full': fullWidth }]}
+>
+  <input type="hidden" name="price_id" value={priceId} />
+  <button
+    type="submit"
+    class={className}
+    style={style}
+    disabled={pending}
+    aria-disabled={pending ? 'true' : undefined}
+    title={pending ? 'Stripe price_id no configurado (corre npm run seed:stripe)' : undefined}
+  >
+    <span class="es">{pending ? '⚠️ Price ID pendiente' : label.es}</span><span class="en">{pending ? '⚠️ Price ID pending' : label.en}</span>
+  </button>
+</form>
+
+<style>
+  .buy-form {
+    display: inline-block;
+    margin: 0;
+  }
+  .buy-form.is-full {
+    display: block;
+    width: 100%;
+  }
+  .buy-form.is-full button {
+    width: 100%;
+  }
+  .buy-form button[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+</style>
